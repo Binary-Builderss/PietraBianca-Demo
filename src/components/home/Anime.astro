@@ -60,6 +60,7 @@ const ALTEZZE = [74, 56, 66, 60]; // vh delle foto nel binario orizzontale (desk
   .anime.is-h .anime-head { position: absolute; z-index: 3; top: clamp(96px, 13vh, 120px); left: 0; right: 0; padding-top: 0; }
   .anime.is-h .track { flex-direction: row; align-items: center; width: max-content; height: 100svh; gap: 7vw; padding: clamp(140px, 19vh, 180px) 14vw 40px clamp(16px, 4vw, 48px); box-sizing: border-box; }
   .anime.is-h .panel { flex-direction: row; align-items: flex-end; gap: 36px; }
+  #anime article { scroll-margin-top: 80px; } /* /#ristorante da mobile non finisce sotto la nav */
   .anime.is-h article:nth-child(even) .panel { align-items: flex-start; }
   .anime.is-h .panel .pic { aspect-ratio: auto; max-width: none; height: var(--h); width: calc(var(--h) * var(--r)); }
   .anime.is-h .panel .txt { width: 30ch; }

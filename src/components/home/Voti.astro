@@ -16,7 +16,7 @@ const voti = [
           ? <strong class="manca">Voto {DA_INSERIRE}</strong>
           : <strong class="font-display">{v.voto}<small> / 5</small></strong>}
         <span>{DA_INSERIRE} recensioni</span>
-        <a href="#" aria-disabled="true">Leggi su {v.fonte} (in arrivo)</a>
+        <span class="in-arrivo">Leggi su {v.fonte} (in arrivo)</span>
       </li>
     ))}
   </ul>
@@ -30,6 +30,6 @@ const voti = [
   .voti strong { font-size: clamp(40px, 5vw, 64px); line-height: 1.1; font-weight: 500; color: var(--navy); }
   .voti strong.manca { font-size: 16px; font-weight: 600; line-height: 1.4; padding: 18px 0 10px; }
   .voti strong small { font-family: var(--font-sans); font-size: 16px; font-weight: 600; }
-  .voti a[aria-disabled] { align-self: flex-start; padding: 12px 0; font-weight: 600; color: #4a5a70; pointer-events: none; text-decoration: underline; text-underline-offset: 3px; }
+  .voti .in-arrivo { padding: 12px 0; font-weight: 600; color: #4a5a70; }
   @media (min-width: 821px) { .voti ul { grid-template-columns: 1fr 1fr; max-width: 900px; } }
 </style>

@@ -5,6 +5,7 @@ import { NOME, prenotaAction, type Divisione } from '../lib/contatti';
 const tutte = (await getCollection('divisioni')).map(e => e.data as Divisione).sort((a, b) => a.ordine - b.ordine);
 ---
 <dialog id="prenota" aria-labelledby="prenota-t">
+  <div class="inner">
   <form method="dialog" class="head">
     <h2 id="prenota-t">Prenota</h2>
     <button aria-label="Chiudi">Chiudi</button>
@@ -15,6 +16,7 @@ const tutte = (await getCollection('divisioni')).map(e => e.data as Divisione).s
       return <li><a href={a.href}><span>{NOME[d.id]}</span><small>{a.label}</small></a></li>;
     })}
   </ul>
+  </div>
 </dialog>
 
 <script>
@@ -24,7 +26,8 @@ const tutte = (await getCollection('divisioni')).map(e => e.data as Divisione).s
 </script>
 
 <style is:global>
-  dialog#prenota { width: min(420px, calc(100% - 20px)); padding: 20px; border: 0; border-radius: 20px; background: var(--pietra); color: var(--notte); box-shadow: 0 20px 60px rgba(0, 0, 0, .3); }
+  dialog#prenota { width: min(420px, calc(100% - 20px)); padding: 0; border: 0; border-radius: 20px; background: var(--pietra); color: var(--notte); box-shadow: 0 20px 60px rgba(0, 0, 0, .3); }
+  dialog#prenota .inner { padding: 20px; } /* il padding sta dentro: un tap sul bordo del foglio non è un tap sul velo */
   dialog#prenota::backdrop { background: rgba(11, 31, 58, .55); }
   dialog#prenota .head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
   dialog#prenota h2 { font-family: var(--font-display); font-size: 28px; line-height: 1.1; }

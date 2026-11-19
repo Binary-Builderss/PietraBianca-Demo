@@ -29,7 +29,7 @@ const prenota = corrente && prenotaAction(corrente);
       <li>
         {prenota
           ? <a class="btn btn-white" href={prenota.href}>{prenota.label}</a>
-          : <button type="button" class="btn btn-white" aria-controls="prenota">Prenota</button>}
+          : <button type="button" class="btn btn-white" aria-controls="prenota" aria-haspopup="dialog">Prenota</button>}
       </li>
     </ul>
   </nav>

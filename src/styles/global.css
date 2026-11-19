@@ -38,8 +38,12 @@ html, body {
 }
 .skip:focus { top: 12px; }
 
-a:focus-visible, button:focus-visible {
-  outline: 2px solid var(--champ); outline-offset: 3px; border-radius: 6px;
+/* anello navy su chiaro, azzurro su scuro (il champagne su pietra non arriva a 3:1) */
+:is(a, button, summary, input, select, textarea):focus-visible {
+  outline: 2px solid var(--navy); outline-offset: 3px; border-radius: 6px;
+}
+:is([data-theme='dark'], .foot, .nav:not([data-nav-theme='light']), .nav.open) :is(a, button, summary, input, select, textarea):focus-visible {
+  outline-color: var(--azz);
 }
 
 /* Barra di riserva della nav: il tema per sezione (motion.ts) vive solo col JS. Senza, la nav resta "dark"
