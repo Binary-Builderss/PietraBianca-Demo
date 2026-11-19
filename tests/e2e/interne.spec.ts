@@ -22,7 +22,7 @@ test('/spa: "Completa l\'esperienza" porta al ristorante', async ({ page }) => {
   await expect(page.getByRole('heading', { name: "Completa l'esperienza" })).toBeVisible();
   await expect(page.locator('.pd-next a')).toHaveAttribute('href', '/#ristorante');
 });
-for (const path of ['/spa', '/eventi']) test(`axe ${path}`, async ({ page }) => {
+for (const path of ['/spa', '/eventi', '/piscina']) test(`axe ${path}`, async ({ page }) => {
   await page.goto(path);
   expect((await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze()).violations).toEqual([]);
 });
@@ -61,4 +61,16 @@ test.describe('/eventi senza JS', () => {
     expect(page.url()).not.toContain('?');
     expect(navs).toEqual([]);
   });
+});
+
+test('/piscina: prezzi, regola cibo, FAQ apribili, Info su WhatsApp', async ({ page }) => {
+  await page.goto('/piscina');
+  await expect(page.getByText(/€13/)).toBeVisible();
+  await expect(page.getByText(/€18/)).toBeVisible();
+  await expect(page.getByText(/cibo dall.esterno/i)).toBeVisible();
+  const faq = page.locator('details');
+  expect(await faq.count()).toBeGreaterThanOrEqual(5);
+  await faq.first().locator('summary').click();
+  await expect(faq.first()).toHaveAttribute('open', '');
+  await expect(page.locator('main a[href^="https://wa.me/393496897941?text="]').first()).toBeVisible();
 });
