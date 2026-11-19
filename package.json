@@ -9,7 +9,8 @@
     "preview": "astro preview",
     "test": "vitest run",
     "e2e": "playwright test",
-    "foto": "sh scripts/foto.sh"
+    "foto": "sh scripts/foto.sh",
+    "lh": "lighthouse http://localhost:4321/ --form-factor=mobile --screenEmulation.mobile --only-categories=performance,accessibility --output=json --output-path=./lh.json --quiet --chrome-flags=--headless"
   },
   "dependencies": {
     "@fontsource-variable/bodoni-moda": "^5.3.0",

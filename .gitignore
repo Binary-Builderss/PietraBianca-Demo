@@ -16,3 +16,6 @@ public/cliente/
 # Playwright
 test-results/
 playwright-report/
+
+# Lighthouse
+lh.json

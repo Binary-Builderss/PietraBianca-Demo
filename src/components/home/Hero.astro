@@ -1,12 +1,19 @@
 ---
 import { getCollection } from 'astro:content';
+import { getImage } from 'astro:assets';
+import heroFoto from '../../assets/cliente/hero.jpg';
 import { waLink, type Divisione } from '../../lib/contatti';
 
 const spa = (await getCollection('divisioni')).map(e => e.data as Divisione).find(d => d.id === 'spa')!;
+// su mobile la foto è mostrata a ~720 px di larghezza reale: WebP 720 px invece del JPEG 1040 px (che resta per desktop e per la texture WebGL)
+const heroMobile = await getImage({ src: heroFoto, format: 'webp', width: 720, quality: 70 });
 ---
 <section class="hero" id="hero" data-theme="dark">
   <div class="hero-media" id="heroMedia"><div class="layer" id="heroLayer">
-    <img src="/cliente/hero.jpg" width="1040" height="1920" alt="La piscina del Pietrabianca al tramonto, vista dal divanetto a bordo vasca" id="heroImg" fetchpriority="high" />
+    <picture>
+      <source media="(max-width: 820px)" srcset={heroMobile.src} type="image/webp" />
+      <img src="/cliente/hero.jpg" width="1040" height="1920" alt="La piscina del Pietrabianca al tramonto, vista dal divanetto a bordo vasca" id="heroImg" fetchpriority="high" />
+    </picture>
   </div></div>
   <div class="hero-txt">
     <p class="kicker" id="kicker">Pomigliano d’Arco · a 20 minuti da Napoli</p>

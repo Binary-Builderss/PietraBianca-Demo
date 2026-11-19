@@ -5,6 +5,10 @@ import Nav from '../components/Nav.astro';
 import Tabbar from '../components/Tabbar.astro';
 import PrenotaSheet from '../components/PrenotaSheet.astro';
 import Footer from '../components/Footer.astro';
+// font del primo schermo in preload: evita il cambio font dopo il primo paint (e il loader della home aspetta document.fonts.ready)
+import manrope from '@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url';
+import bodoni from '@fontsource-variable/bodoni-moda/files/bodoni-moda-latin-opsz-normal.woff2?url';
+import bodoniItalic from '@fontsource-variable/bodoni-moda/files/bodoni-moda-latin-opsz-italic.woff2?url';
 
 interface Props {
   title: string;
@@ -24,6 +28,7 @@ const { title, description, divisione, navTheme = 'dark' } = Astro.props;
     <title>{title}</title>
     <meta name="description" content={description} />
     <script is:inline>document.documentElement.classList.add('js')</script>
+    {[manrope, bodoni, bodoniItalic].map(href => <link rel="preload" as="font" type="font/woff2" href={href} crossorigin />)}
     <slot name="head" />
   </head>
   <body>
