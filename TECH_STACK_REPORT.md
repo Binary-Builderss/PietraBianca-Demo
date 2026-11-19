@@ -1,7 +1,7 @@
 # Pietrabianca Resort — Tech Stack Report
 
 > Documento di architettura pre-sviluppo · redatto il 19/11/2026 · **rev. 2** (dopo la revisione indipendente)
-> Input: [`BRAND_IDENTITY.md`](./BRAND_IDENTITY.md). Versioni dei framework verificate sulla documentazione ufficiale tramite Context7 (Astro 6.x, Payload 3.8x). I costi sono **indicativi, aggiornati a novembre 2026**: verificarli al momento dell'offerta.
+> Input: [`BRAND_IDENTITY.md`](./BRAND_IDENTITY.md). Versioni dei framework verificate sulla documentazione ufficiale (Astro 6.x, Payload 3.8x). I costi sono **indicativi, aggiornati a novembre 2026**: verificarli al momento dell'offerta.
 
 ---
 
@@ -129,7 +129,7 @@ Scala 1–5 (5 = migliore per **questo** progetto). I pesi bilanciano l'obiettiv
 | Font | Bodoni Moda + Manrope, **self-hosted** (woff2) | nessuna richiesta a Google Fonts (performance e GDPR) |
 | Immagini | `astro:assets` → `<Picture>` AVIF/WebP | `fetchpriority="high"` solo sull'immagine LCP |
 | Video hero | `<video>` nativo, MP4 + WebM + poster | nessun player JS |
-| Animazioni | Transizioni CSS + GSAP 3.13 + uno shader WebGL | decisione del 19/11/2026, v. spec demo; rispetto di `prefers-reduced-motion` |
+| Animazioni | Transizioni CSS + GSAP 3.13 + uno shader WebGL | decisione del 19/11/2026; rispetto di `prefers-reduced-motion` |
 | Contenuti | Content Collections (MD/JSON + Zod) | `promo`, `eventi`, `trattamenti`, `camere` |
 | Form preventivo | Nella demo **non invia dati reali** (oppure invia solo al fornitore, con avviso) | in produzione: Netlify Forms o Formspree + honeypot + consenso |
 | WhatsApp / chiamate | link `wa.me` / `tel:` | zero dipendenze |
