@@ -1,0 +1,169 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..600&family=Manrope:wght@400;500;600;700&display=swap');
+.pb{--navy:#06366D;--notte:#0B1F3A;--azz:#9BC0DF;--pietra:#F9F6F1;--trav:#E4DCCD;--champ:#C8A96A;font-family:Manrope,system-ui,sans-serif}
+.pb *{box-sizing:border-box}
+.pb .row{display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap;margin:8px 0 6px}
+.pb .desk{width:760px;max-width:100%;border-radius:12px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.18);background:#fff;flex:0 0 auto}
+.pb .bar{height:26px;background:#e9e9ee;display:flex;align-items:center;gap:6px;padding:0 10px}
+.pb .bar i{width:9px;height:9px;border-radius:50%;background:#c9c9cf;display:block}
+.pb .phone{width:250px;border-radius:34px;border:9px solid #111;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.25);background:#fff;flex:0 0 auto;position:relative}
+.pb .scr{height:500px;overflow:hidden;position:relative}
+.pb .bod{font-family:'Bodoni Moda',serif}
+.pb .cta{display:inline-block;padding:9px 16px;border-radius:999px;font-weight:600;font-size:12px;text-decoration:none}
+.pb .wa{background:#25D366;color:#063}
+.pb .tabbar{position:absolute;left:0;right:0;bottom:0;display:grid;grid-template-columns:1fr 1fr 1fr;background:#fff;border-top:1px solid #e5e5e5;font-size:10px;font-weight:700;text-align:center;color:#06366D}
+.pb .tabbar span{padding:10px 0}
+.pb .tabbar .w{background:#25D366;color:#053}
+.pb img.cover{width:100%;height:100%;object-fit:cover;display:block}
+.pb .lbl{font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:700}
+/* A */
+.a-hero{position:relative;height:430px}.a-hero img.cover{object-position:center 75%}
+.a-hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,54,109,.55),rgba(6,54,109,.05) 40%,rgba(11,31,58,.75))}
+.a-nav{position:absolute;z-index:2;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:14px 22px;color:#fff;font-size:11px;font-weight:600}
+.a-nav nav span{margin-left:16px}
+.a-txt{position:absolute;z-index:2;left:28px;bottom:28px;color:#fff;max-width:520px}
+.a-txt h1{font-size:44px;line-height:1.02;margin:6px 0 10px;font-weight:500}
+.a-txt h1 em{font-style:italic}
+.a-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:10px;background:var(--pietra)}
+.a-card{position:relative;height:120px;border-radius:8px;overflow:hidden}
+.a-card b{position:absolute;left:8px;bottom:7px;color:#fff;font-family:'Bodoni Moda',serif;font-size:17px;font-weight:500;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+/* B */
+.b-wrap{background:var(--pietra);color:var(--notte)}
+.b-nav{display:flex;justify-content:space-between;align-items:center;padding:14px 26px;font-size:11px;font-weight:600;color:var(--navy);border-bottom:1px solid var(--trav)}
+.b-nav nav span{margin-left:16px}
+.b-hero{display:grid;grid-template-columns:1.05fr 1fr;gap:20px;padding:30px 26px 22px;align-items:center}
+.b-hero h1{font-size:40px;line-height:1.05;margin:8px 0 12px;font-weight:500;color:var(--navy)}
+.b-hero p{font-size:13px;line-height:1.6;color:#3b4a5e;margin:0 0 16px}
+.b-mos{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:150px 150px;gap:8px}
+.b-mos div{border-radius:10px;overflow:hidden}
+.b-mos div:first-child{grid-row:span 2}
+.b-strip{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--trav)}
+.b-strip div{padding:14px 16px;border-right:1px solid var(--trav);font-size:11px;color:#4a5a6e}
+.b-strip b{display:block;font-family:'Bodoni Moda',serif;font-size:18px;color:var(--navy);font-weight:500;margin-bottom:3px}
+/* C */
+.c-wrap{background:var(--notte);color:#fff}
+.c-nav{display:flex;justify-content:space-between;align-items:center;padding:14px 24px;font-size:11px;font-weight:600}
+.c-nav nav span{margin-left:16px;opacity:.85}
+.c-hero{display:grid;grid-template-columns:1fr 1fr;height:380px}.c-hero>div{overflow:hidden}
+.c-hero .t{padding:26px 26px 22px}
+.c-hero h1{font-size:40px;line-height:1.04;margin:10px 0 12px;font-weight:500}
+.c-hero h1 em{color:var(--champ)}
+.c-hero p{font-size:13px;line-height:1.6;opacity:.85;margin:0 0 16px}
+.c-gift{display:flex;gap:10px;align-items:center;margin-top:14px;padding:10px;border:1px solid rgba(200,169,106,.5);border-radius:10px}
+.c-gift img{width:46px;height:46px;border-radius:6px;object-fit:cover}
+.c-gift small{font-size:11px;opacity:.85}
+.c-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.1)}
+.c-row div{background:var(--notte);padding:12px 14px;font-size:11px;opacity:.9}
+.c-row b{display:block;font-family:'Bodoni Moda',serif;font-size:16px;font-weight:500;color:var(--azz)}
+.pb .champ{background:var(--champ);color:var(--notte)}
+.pb .ghost{border:1px solid currentColor;color:inherit}
+.pb .navy{background:var(--navy);color:#fff}
+.pb .white{background:#fff;color:var(--navy)}
+</style>
+
+<h2>Home: tre direzioni visive</h2>
+<p class="subtitle">Foto vere dal loro Instagram, logo e colori presi dal logo ufficiale (navy #06366D, azzurro #9BC0DF). Ogni direzione è mostrata su MacBook e su telefono. Clicca quella che senti più giusta: puoi anche mescolarle ("l'hero di A con le card di B").</p>
+
+<div class="pb">
+<div class="options">
+
+<!-- ================= A ================= -->
+<div class="option" data-choice="a" onclick="toggleSelect(this)">
+  <div class="letter">A</div>
+  <div class="content">
+    <h3>Cinematica: la foto è la protagonista</h3>
+    <p>Piscina a tutto schermo, titolo grande sopra la foto, le 4 "anime" in card fotografiche subito sotto. Effetto "wow" immediato, molto Instagram. Rischio: con poche foto belle diventa ripetitiva.</p>
+    <div class="row">
+      <div class="desk"><div class="bar"><i></i><i></i><i></i></div>
+        <div class="a-hero"><img class="cover" src="assets/pool-parasol-sunbed.jpg" alt="">
+          <div class="a-nav"><img src="assets/logo-white.png" style="height:34px" alt="Pietrabianca Resort"><nav><span>SPA</span><span>Eventi</span><span>Piscina</span><span>Ristorante</span><span>Camere</span><span class="cta white" style="margin-left:18px">Prenota</span></nav></div>
+          <div class="a-txt"><div class="lbl">Pomigliano d'Arco · a 20 minuti da Napoli</div><h1 class="bod">Tre anime,<br><em>una sola destinazione.</em></h1><span class="cta white">Scopri la SPA</span> <span class="cta wa" style="margin-left:6px">Scrivici su WhatsApp</span></div>
+        </div>
+        <div class="a-cards">
+          <div class="a-card"><img class="cover" src="assets/spa-indoor-pool.jpg" alt=""><b>SPA</b></div>
+          <div class="a-card"><img class="cover" src="assets/event-pink-mise-en-place.jpg" alt=""><b>Eventi</b></div>
+          <div class="a-card"><img class="cover" src="assets/pool-sunset-lounge.jpg" alt=""><b>Piscina</b></div>
+          <div class="a-card"><img class="cover" src="assets/food-risotto.jpg" alt=""><b>Ristorante</b></div>
+        </div>
+      </div>
+      <div class="phone"><div class="scr">
+        <div style="position:relative;height:330px"><img class="cover" src="assets/pool-parasol-sunbed.jpg" alt="">
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,54,109,.5),transparent 40%,rgba(11,31,58,.8))"></div>
+          <img src="assets/logo-white.png" style="position:absolute;top:14px;left:14px;height:26px" alt="">
+          <div style="position:absolute;left:16px;right:16px;bottom:16px;color:#fff"><div class="lbl" style="font-size:8px">A 20 min da Napoli</div><div class="bod" style="font-size:28px;line-height:1.05;margin-top:4px">Tre anime,<br><i>una sola destinazione.</i></div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:8px;background:#F9F6F1">
+          <div class="a-card" style="height:90px"><img class="cover" src="assets/spa-indoor-pool.jpg" alt=""><b style="font-size:14px">SPA</b></div>
+          <div class="a-card" style="height:90px"><img class="cover" src="assets/event-pink-mise-en-place.jpg" alt=""><b style="font-size:14px">Eventi</b></div>
+        </div>
+        <div class="tabbar"><span class="w">WhatsApp</span><span>Chiama</span><span style="background:#06366D;color:#fff">Prenota</span></div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= B ================= -->
+<div class="option" data-choice="b" onclick="toggleSelect(this)">
+  <div class="letter">B</div>
+  <div class="content">
+    <h3>Editoriale chiara: rivista di viaggio</h3>
+    <p>Fondo color pietra, testo a sinistra e mosaico di foto a destra, prezzi "da" ben visibili (SPA da €15, piscina da €13, degustazione €50). Più elegante e "onesta", risponde alle recensioni. Meno effetto wow al primo secondo.</p>
+    <div class="row">
+      <div class="desk"><div class="bar"><i></i><i></i><i></i></div>
+        <div class="b-wrap">
+          <div class="b-nav"><img src="assets/logo-blue.png" style="height:34px" alt="Pietrabianca Resort"><nav><span>SPA</span><span>Eventi</span><span>Piscina</span><span>Ristorante</span><span>Camere</span><span class="cta navy" style="margin-left:18px">Prenota</span></nav></div>
+          <div class="b-hero">
+            <div><div class="lbl" style="color:#6c86a6">Pomigliano d'Arco · a 20 min da Napoli</div>
+              <h1 class="bod">La tua giornata fuori,<br><i>tutta in un posto.</i></h1>
+              <p>SPA con piscina interna, tre piscine, la cucina di Don Peppino e feste su misura. Parcheggio gratuito, e se vuoi restare, una camera.</p>
+              <span class="cta navy">Prenota la SPA</span> <span class="cta wa" style="margin-left:6px">WhatsApp</span></div>
+            <div class="b-mos"><div><img class="cover" src="assets/pool-building-palm.jpg" alt=""></div><div><img class="cover" src="assets/spa-pool-waterfall.jpg" alt=""></div><div><img class="cover" src="assets/food-pasta-shrimp.jpg" alt=""></div></div>
+          </div>
+          <div class="b-strip"><div><b>SPA da €15</b>percorso umido</div><div><b>3 piscine</b>day-use da €13</div><div><b>Degustazione</b>6 portate · €50</div><div><b>Feste</b>da €899</div></div>
+        </div>
+      </div>
+      <div class="phone"><div class="scr" style="background:#F9F6F1">
+        <div style="padding:14px 14px 0"><img src="assets/logo-blue.png" style="height:26px" alt=""></div>
+        <div style="padding:12px 14px"><div class="lbl" style="font-size:8px;color:#6c86a6">A 20 min da Napoli</div><div class="bod" style="font-size:26px;line-height:1.06;color:#06366D;margin:6px 0 8px">La tua giornata fuori, <i>tutta in un posto.</i></div></div>
+        <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:6px;padding:0 14px;height:170px"><div style="border-radius:10px;overflow:hidden"><img class="cover" src="assets/pool-building-palm.jpg" alt=""></div><div style="border-radius:10px;overflow:hidden"><img class="cover" src="assets/spa-pool-waterfall.jpg" alt=""></div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;margin:12px 14px;border-top:1px solid #E4DCCD;font-size:10px;color:#4a5a6e"><div style="padding:8px 0"><b class="bod" style="display:block;font-size:15px;color:#06366D;font-weight:500">SPA da €15</b>percorso umido</div><div style="padding:8px 0"><b class="bod" style="display:block;font-size:15px;color:#06366D;font-weight:500">3 piscine</b>da €13</div></div>
+        <div class="tabbar"><span class="w">WhatsApp</span><span>Chiama</span><span style="background:#06366D;color:#fff">Prenota</span></div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= C ================= -->
+<div class="option" data-choice="c" onclick="toggleSelect(this)">
+  <div class="letter">C</div>
+  <div class="content">
+    <h3>Notte e Natale: la home stagionale</h3>
+    <p>Fondo notte, accenti champagne, la stagione in primo piano: buoni regalo SPA e Capodanno. È la home "di adesso", quella che fa dire al titolare "possiamo vendere da subito". D'estate si cambia foto e messaggio: stessa struttura.</p>
+    <div class="row">
+      <div class="desk"><div class="bar"><i></i><i></i><i></i></div>
+        <div class="c-wrap">
+          <div class="c-nav"><img src="assets/logo-white.png" style="height:34px" alt="Pietrabianca Resort"><nav><span>SPA</span><span>Eventi</span><span>Piscina</span><span>Ristorante</span><span>Camere</span><span class="cta champ" style="margin-left:18px">Buoni regalo</span></nav></div>
+          <div class="c-hero">
+            <div class="t"><div class="lbl" style="color:#C8A96A">Natale al Pietrabianca</div>
+              <h1 class="bod">Regala una pausa<br><em><i>da ricordare.</i></em></h1>
+              <p>Il percorso SPA con piscina interna, sauna e bagno turco, da regalare a chi ami. Lo ricevi subito via email, pronto da stampare.</p>
+              <span class="cta champ">Acquista un buono</span> <span class="cta ghost" style="margin-left:6px">Capodanno: Gala Dinner</span>
+              <div class="c-gift"><img src="assets/xmas-gift-card.jpg" alt=""><small>Percorso SPA per due · Massaggio di coppia · Importo libero</small></div>
+            </div>
+            <div><img class="cover" src="assets/pool-night-lights.jpg" alt=""></div>
+          </div>
+          <div class="c-row"><div><b>SPA</b>Pietrabianca Space</div><div><b>Eventi</b>feste su misura</div><div><b>Piscine</b>riaprono il 30/05</div><div><b>Don Peppino</b>ristorante · pizzeria</div></div>
+        </div>
+      </div>
+      <div class="phone"><div class="scr" style="background:#0B1F3A;color:#fff">
+        <div style="position:relative;height:230px"><img class="cover" src="assets/pool-night-lights.jpg" alt=""><div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,31,58,.4),rgba(11,31,58,1))"></div><img src="assets/logo-white.png" style="position:absolute;top:14px;left:14px;height:26px" alt=""></div>
+        <div style="padding:0 16px;margin-top:-40px;position:relative"><div class="lbl" style="font-size:8px;color:#C8A96A">Natale al Pietrabianca</div><div class="bod" style="font-size:27px;line-height:1.05;margin:6px 0 10px">Regala una pausa <i style="color:#C8A96A">da ricordare.</i></div><span class="cta champ" style="font-size:11px">Acquista un buono</span>
+          <div class="c-gift" style="margin-top:12px"><img src="assets/xmas-gift-card.jpg" alt=""><small style="font-size:9px">Percorso SPA per due · Massaggio · Importo libero</small></div></div>
+        <div class="tabbar" style="background:#0B1F3A;border-color:rgba(255,255,255,.15);color:#fff"><span class="w">WhatsApp</span><span>Chiama</span><span class="champ">Buoni</span></div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
