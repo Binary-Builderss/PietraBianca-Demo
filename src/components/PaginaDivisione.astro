@@ -62,7 +62,7 @@ const azione = prenotaAction(mia);
   @media (max-width: 820px) { .pd-cta .btn { display: none; } } /* su mobile l'azione è già nella tabbar */
   @media (min-width: 821px) {
     .pd-hero { min-height: min(100svh, 860px); padding: 96px calc(var(--ww) + var(--g) + clamp(24px, 4vw, 64px)) var(--g) var(--g); }
-    .pd-hero img { inset: 96px var(--g) var(--g) auto; width: var(--ww); height: calc(100% - 96px - var(--g)); border-radius: 6px; }
+    .pd-hero img { inset: auto var(--g) var(--g) auto; width: var(--ww); height: min(calc(100% - 96px - var(--g)), calc(var(--ww) * 4 / 3)); border-radius: 6px; }
     .pd-hero:after { display: none; }
   }
 

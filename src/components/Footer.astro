@@ -44,9 +44,10 @@ const numeri = [
 
 <style is:global>
   .foot { display: grid; gap: 40px 32px; padding: 56px var(--gut) 32px; border-top: 1px solid rgba(155, 192, 223, .2); background: var(--notte); color: #fff; font-size: 14px; line-height: 1.7; }
-  .foot h2 { margin: 0 0 12px; font: 700 12px var(--font-sans); letter-spacing: .16em; text-transform: uppercase; color: var(--azz); }
+  .foot h2 { margin: 0 0 12px; font: 700 12px var(--font-sans); letter-spacing: .2em; text-transform: uppercase; color: var(--azz); }
   .foot-wm { display: block; width: 140px; height: auto; margin-bottom: 16px; }
   .foot address { font-style: normal; }
+  body:has(#dove) .foot address { display: none; } /* in home l'indirizzo è già nella Mappa subito sopra */
   .foot ul { list-style: none; margin: 0; padding: 0; }
   .foot a { display: inline-block; padding: 10px 0; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
   .foot .legal { grid-column: 1 / -1; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, .12); font-size: 12px; opacity: .7; }

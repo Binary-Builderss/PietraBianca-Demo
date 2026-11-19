@@ -13,8 +13,9 @@ test('/spa: prezzi con asterisco, listino massaggi da inserire, CTA verso WhatsA
   await expect(page.getByText('€35 di listino, in promo da €15 (kit escluso)*')).toBeVisible();
   await expect(page.getByText('[DA INSERIRE CON IL CLIENTE]').first()).toBeVisible();
   // la CTA dell'hero (.pd-cta) ripete apposta il messaggio di «Prenota il percorso»
+  const tutte = page.locator('main a[href^="https://wa.me/"]');
+  expect(await tutte.evaluateAll(as => as.map(a => a.getAttribute('href')!.split('?')[0]))).toEqual(Array(await tutte.count()).fill('https://wa.me/393496897941'));
   const cta = page.locator('main a[href^="https://wa.me/"]:not(.pd-cta a)');
-  expect(await cta.evaluateAll(as => as.map(a => a.getAttribute('href')!.split('?')[0]))).toEqual(Array(await cta.count()).fill('https://wa.me/393496897941'));
   const testi = await cta.evaluateAll(as => as.map(a => new URL(a.getAttribute('href')!).searchParams.get('text')));
   expect(new Set(testi).size).toBe(testi.length); // ogni CTA ha il suo testo
 });

@@ -39,12 +39,12 @@ html, body {
   margin: 14px 0 20px; font-size: var(--h2); line-height: 1.06; letter-spacing: -.012em; font-weight: 500; text-wrap: balance;
 }
 :is(.camere, .natale, .voti, .mappa, .spa-sez, .ev-sez, .pi-sez, .pd-next, .anime-head) h2 em { font-style: italic; font-weight: 400; letter-spacing: -.005em; }
-.eyebrow { margin: 0; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; font-weight: 700; line-height: 1.5; }
+.eyebrow { margin: 0; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; font-weight: 700; line-height: 1.5; }
 
 /* pulsanti a pillola */
 .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; border-radius: 999px; font-weight: 600; font-size: 14px; min-height: 48px; cursor: pointer; border: 0; font-family: inherit;
-  transition: background-color .35s cubic-bezier(.2, .7, .2, 1), color .35s cubic-bezier(.2, .7, .2, 1), transform .2s ease-out, filter .35s; -webkit-tap-highlight-color: transparent; }
-.btn:active { transform: scale(.98); }
+  transition: background-color .35s cubic-bezier(.2, .7, .2, 1), color .35s cubic-bezier(.2, .7, .2, 1), scale .2s ease-out, filter .35s; -webkit-tap-highlight-color: transparent; }
+.btn:active { scale: .98; } /* scale, non transform: il magnetico GSAP scrive transform */
 .btn-white { background: #fff; color: var(--navy); }
 .btn-navy { background: var(--navy); color: #fff; }
 .btn-wa { background: #25D366; color: #053; }
@@ -55,7 +55,7 @@ html, body {
   .btn-champ:hover { background: #D6BB84; } /* testo notte 8,9:1 */
   .btn-wa:hover { filter: brightness(1.06); } /* schiarire, mai scurire: #053 su verde è già al limite (4,51:1) */
 }
-@media (prefers-reduced-motion: reduce) { .btn { transition: none; } .btn:active { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .btn { transition: none; } .btn:active { scale: none; } }
 
 .skip {
   position: fixed; z-index: 200; top: -60px; left: 16px;
