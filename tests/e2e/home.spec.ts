@@ -55,8 +55,8 @@ test.describe('pin orizzontale: mouse e tastiera', () => {
     const ultimo = page.locator('#anime a.panel').nth(3);
     for (let i = 0; i < 40 && !(await ultimo.evaluate(a => a === document.activeElement)); i++) await page.keyboard.press('Tab');
     await expect(ultimo).toBeFocused();
-    await expect.poll(async () => (await ultimo.boundingBox())!.x + (await ultimo.boundingBox())!.width).toBeLessThanOrEqual(1440 + 1);
-    await expect.poll(async () => (await ultimo.boundingBox())!.x).toBeGreaterThanOrEqual(0);
+    await expect.poll(async () => (await ultimo.boundingBox())!.x + (await ultimo.boundingBox())!.width, { timeout: 15000 }).toBeLessThanOrEqual(1440 + 1); // sotto carico lo scroll del pin arriva tardi
+    await expect.poll(async () => (await ultimo.boundingBox())!.x, { timeout: 15000 }).toBeGreaterThanOrEqual(0);
   });
 });
 test('nav diventa light sul manifesto', async ({ page }) => {

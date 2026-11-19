@@ -16,10 +16,11 @@ interface Props {
   divisione?: DivisioneId;
   navTheme?: 'dark' | 'light';
   schema?: object;
+  errore?: boolean; // pagina 404: niente canonical, noindex anche dopo il lancio
 }
-const { title, description, divisione, navTheme = 'dark', schema } = Astro.props;
+const { title, description, divisione, navTheme = 'dark', schema, errore = false } = Astro.props;
 // URL assoluti solo se SITE_URL è definita (astro.config.mjs): in demo niente canonical né og:url
-const canonical = Astro.site && new URL(Astro.url.pathname, Astro.site).href;
+const canonical = !errore && Astro.site && new URL(Astro.url.pathname, Astro.site).href;
 ---
 <!doctype html>
 <html lang="it" data-divisione={divisione}>

@@ -32,7 +32,7 @@ const tipiEvento = ['Diciottesimo', 'Festa a tema', 'Comunione/Battesimo', 'Dinn
       <div data-reveal>
         <p class="eyebrow">Capodanno</p>
         <h2 class="font-display">Gala Dinner, <em>musica dal vivo.</em></h2>
-        <p class="ev-nota">Cena di gala e musica dal vivo per l’ultima notte dell’anno.</p>
+        <p class="ev-nota">La cena di gala dell’ultima notte dell’anno.</p>
         <a class="btn btn-champ" href={telLink(eventi.tel)}>Chiama per il Capodanno</a>
       </div>
     </section>
@@ -40,7 +40,7 @@ const tipiEvento = ['Diciottesimo', 'Festa a tema', 'Comunione/Battesimo', 'Dinn
     <section class="ev-sez ev-trav" data-theme="light" aria-labelledby="preventivoT">
       <div data-reveal>
         <h2 class="font-display" id="preventivoT">Raccontaci <em>la tua festa.</em></h2>
-        <p class="ev-nota">Tipo di festa, data, invitati e un recapito: ti ricontatta lo staff eventi.</p>
+        <p class="ev-nota">Tipo di festa, invitati e un recapito: ti ricontatta lo staff eventi.</p>
       </div>
       <div data-reveal>
         <form id="preventivo" class="ev-form" method="dialog">
@@ -54,7 +54,7 @@ const tipiEvento = ['Diciottesimo', 'Festa a tema', 'Comunione/Battesimo', 'Dinn
             <input type="date" name="data" />
           </label>
           <label>Numero di invitati
-            <input type="number" name="invitati" min="10" inputmode="numeric" required />
+            <input type="number" name="invitati" min="1" inputmode="numeric" required />
           </label>
           <label>Nome
             <input type="text" name="nome" autocomplete="name" required />

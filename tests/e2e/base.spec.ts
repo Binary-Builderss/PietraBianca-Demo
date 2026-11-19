@@ -14,3 +14,9 @@ test('nessun font da Google', async ({ page }) => {
   await page.goto('/'); await page.waitForLoadState('networkidle');
   expect(esterni).toEqual([]);
 });
+test('404: noindex, nessun canonical, link alle divisioni', async ({ page }) => {
+  await page.goto('/404');
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
+  await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
+  await expect(page.locator('main a[href="/spa"]').first()).toBeVisible();
+});
