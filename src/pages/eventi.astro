@@ -2,19 +2,19 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import PaginaDivisione from '../components/PaginaDivisione.astro';
-import type { Divisione } from '../lib/contatti';
+import { telLink, type Divisione } from '../lib/contatti';
 
 const eventi = (await getCollection('divisioni')).map(e => e.data as Divisione).find(d => d.id === 'eventi')!;
 // solo tipologie con fonte in BRAND_IDENTITY §3.4 / §0 riga 10: niente capienze, menu o sale inventati
 const tipologie = ['Feste a tema', 'Pacchetti 18 anni', 'Comunioni e battesimi', 'Cene aziendali'];
-const tipiEvento = ['Diciottesimo', 'Festa a tema', 'Comunione/Battesimo', 'Dinner Show', 'Cena aziendale', 'Altro'];
+const tipiEvento = ['Diciottesimo', 'Festa a tema', 'Comunione/Battesimo', 'Dinner Show', 'Gala di Capodanno', 'Cena aziendale', 'Altro'];
 ---
-<Base title="Eventi · Pietrabianca Resort" description="Feste a tema, diciottesimi, comunioni e battesimi, Dinner Show: chiedi un preventivo." divisione="eventi">
-  <PaginaDivisione id="eventi" titolo="Tu immagina" titoloEm="la festa." intro="Noi le diamo il ritmo: dal pacchetto base con DJ alle formule su misura, con show e ospiti." foto="v3-event-pink-mise-en-place.jpg" fotoAlt={eventi.fotoAlt} focus="50% 40%">
+<Base title="Feste private e 18 anni a Pomigliano d’Arco · Pietrabianca" description="Feste a tema, pacchetti 18 anni e Dinner Show, la cena spettacolo del resort. Chiedi un preventivo: Pomigliano d’Arco, a 20 minuti da Napoli." divisione="eventi">
+  <PaginaDivisione id="eventi" eyebrow="Feste a Pomigliano d’Arco" titolo="Tu immagina" titoloEm="la festa." intro="Noi le diamo il ritmo: dal pacchetto base con DJ alle formule su misura, con ballerini e artisti." foto="v3-event-pink-mise-en-place.jpg" fotoAlt={eventi.fotoAlt} focus="50% 40%">
 
     <section class="ev-sez" data-theme="light" aria-labelledby="festeT">
       <div data-reveal>
-        <h2 class="font-display" id="festeT">Il tuo giorno, <em>a modo tuo.</em></h2>
+        <h2 class="font-display" id="festeT">Ogni festa, <em>il suo tema.</em></h2>
         <p class="ev-prezzo">{eventi.prezzo}</p>
         <p class="ev-nota">*Prezzi indicativi, da confermare</p>
         <a class="btn btn-navy" href="#preventivo">Chiedi un preventivo</a>
@@ -26,19 +26,21 @@ const tipiEvento = ['Diciottesimo', 'Festa a tema', 'Comunione/Battesimo', 'Dinn
       <div data-reveal>
         <p class="eyebrow">Dinner Show</p>
         <h2 class="font-display" id="serataT">Cenare, cantare, <em>divertirsi.</em></h2>
-        <p class="ev-nota">Cena con spettacolo, solo su prenotazione. Calendario, prezzi e menu: [DA INSERIRE CON IL CLIENTE]</p>
+        <p class="ev-nota">Cena spettacolo, solo su prenotazione. Calendario, prezzi e menu: [DA INSERIRE CON IL CLIENTE]</p>
+        <a class="btn btn-champ" href={telLink(eventi.tel)}>Prenota al telefono</a>
       </div>
       <div data-reveal>
         <p class="eyebrow">Capodanno</p>
         <h2 class="font-display">Gala Dinner, <em>musica dal vivo.</em></h2>
-        <p class="ev-nota">La notte di fine anno si apre con una cena di gala.</p>
+        <p class="ev-nota">Cena di gala e musica dal vivo per l’ultima notte dell’anno.</p>
+        <a class="btn btn-champ" href={telLink(eventi.tel)}>Chiama per il Capodanno</a>
       </div>
     </section>
 
     <section class="ev-sez ev-trav" data-theme="light" aria-labelledby="preventivoT">
       <div data-reveal>
         <h2 class="font-display" id="preventivoT">Raccontaci <em>la tua festa.</em></h2>
-        <p class="ev-nota">Compila il modulo: ti ricontatta lo staff eventi.</p>
+        <p class="ev-nota">Tipo di festa, data, invitati e un recapito: ti ricontatta lo staff eventi.</p>
       </div>
       <div data-reveal>
         <form id="preventivo" class="ev-form" method="dialog">
@@ -48,8 +50,8 @@ const tipiEvento = ['Diciottesimo', 'Festa a tema', 'Comunione/Battesimo', 'Dinn
               {tipiEvento.map(t => <option value={t}>{t}</option>)}
             </select>
           </label>
-          <label>Data
-            <input type="date" name="data" required />
+          <label>Data, se l’hai già scelta
+            <input type="date" name="data" />
           </label>
           <label>Numero di invitati
             <input type="number" name="invitati" min="10" inputmode="numeric" required />
@@ -60,14 +62,15 @@ const tipiEvento = ['Diciottesimo', 'Festa a tema', 'Comunione/Battesimo', 'Dinn
           <label>Telefono
             <input type="tel" name="telefono" autocomplete="tel" required />
           </label>
-          <label>Email
-            <input type="email" name="email" autocomplete="email" required />
+          <label>Email (facoltativa)
+            <input type="email" name="email" autocomplete="email" />
           </label>
           <label class="ev-privacy">
             <input type="checkbox" name="privacy" required />
             <span>Ho letto l'informativa privacy [DA INSERIRE CON IL CLIENTE: testo informativa]</span>
           </label>
-          <button class="btn btn-navy" type="submit">Invia richiesta</button>
+          <button class="btn btn-navy" type="submit">Invia la richiesta</button>
+          <p class="ev-voce">Preferisci parlarne a voce? <a href={telLink(eventi.tel)}>Chiama lo 081 803 5327</a></p>
         </form>
       </div>
     </section>
@@ -88,7 +91,7 @@ const tipiEvento = ['Diciottesimo', 'Festa a tema', 'Comunione/Battesimo', 'Dinn
     const ok = document.createElement('p');
     ok.setAttribute('role', 'status');
     ok.className = 'ev-ok';
-    ok.textContent = 'Richiesta di prova: in questa demo non viene inviato nulla. Nel sito vero arriva via email e WhatsApp allo staff eventi.';
+    ok.textContent = 'Grazie! Sul sito online questa richiesta arriva allo staff eventi via email e WhatsApp. In questa demo non viene inviato nulla.';
     ok.tabIndex = -1;
     form.replaceWith(ok);
     ok.focus(); // il form sparisce e la pagina si accorcia: la conferma deve restare in vista
@@ -117,6 +120,8 @@ const tipiEvento = ['Diciottesimo', 'Festa a tema', 'Comunione/Battesimo', 'Dinn
   .ev-form .ev-privacy { grid-template-columns: auto 1fr; align-items: start; gap: 12px; font-size: 14px; font-weight: 400; letter-spacing: 0; line-height: 1.5; }
   .ev-privacy input { width: 22px; height: 22px; margin: 0; accent-color: var(--navy); }
   .ev-form .btn { justify-self: start; }
+  .ev-voce { margin: 0; font-size: 15px; }
+  .ev-voce a { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
   .ev-ok:focus { outline: none; }
   .ev-ok { margin: 0; max-width: 44ch; padding: 24px; border-left: 3px solid var(--navy); background: var(--pietra); font-size: 17px; line-height: 1.6; }
   @media (min-width: 821px) {

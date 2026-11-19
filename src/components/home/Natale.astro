@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import foto from '../../assets/cliente/xmas-gift-card.jpg';
-import { waLink, type Divisione } from '../../lib/contatti';
+import { CENTRALINO, telLink, waLink, type Divisione } from '../../lib/contatti';
 
 const spa = (await getCollection('divisioni')).map(e => e.data as Divisione).find(d => d.id === 'spa')!;
 ---
@@ -10,24 +10,27 @@ const spa = (await getCollection('divisioni')).map(e => e.data as Divisione).fin
   <div class="pic"><Image src={foto} alt="Mani che tengono una gift card rossa davanti a un albero di Natale illuminato" widths={[480, 800]} sizes="(min-width: 821px) 34vw, 100vw" /></div>
   <div class="txt">
     <p class="eyebrow">Natale a Pietrabianca</p>
-    <h2 class="font-display" id="nataleTitle">Le feste, <em>a modo nostro.</em></h2>
+    <h2 class="font-display" id="nataleTitle">Da regalare, <em>da festeggiare.</em></h2>
     <div class="offerte">
       <article data-reveal>
         <h3 class="font-display">Buoni regalo SPA</h3>
         <p>Regala acqua calda, luci soffuse e un pomeriggio senza orologio.</p>
-        <a class="btn btn-wa" href={waLink(spa.whatsapp, 'Vorrei un buono regalo SPA')}>Chiedi su WhatsApp</a>
+        <div class="ctas">
+          <a class="btn btn-wa" href={waLink(spa.whatsapp, 'Ciao Pietrabianca Space! Vorrei regalare un buono SPA per Natale: come funziona?')}>Chiedi su WhatsApp</a>
+          <a class="txtlink" href={spa.href}>Il percorso SPA →</a>
+        </div>
       </article>
       <article data-reveal>
         <h3 class="font-display">Gala Dinner di Capodanno</h3>
         <p>Cena di gala e musica dal vivo per salutare l'anno nuovo insieme.</p>
-        <a class="btn btn-champ" href="/eventi#preventivo">Chiedi un preventivo</a>
+        <a class="btn btn-champ" href={telLink(CENTRALINO)}>Chiama per il Capodanno</a>
       </article>
     </div>
   </div>
 </section>
 
 <style is:global>
-  .natale { display: grid; gap: 40px; padding: var(--sec-y) var(--gut); background: var(--notte); color: #fff; }
+  .natale { border-top: 1px solid rgba(200, 169, 106, .35); display: grid; gap: 40px; padding: var(--sec-y) var(--gut); background: var(--notte); color: #fff; }
   .natale .eyebrow, .natale h2 em { color: var(--champ); }
   .natale .pic { aspect-ratio: 4/5; }
   .natale .offerte { display: grid; gap: 32px; margin-top: 32px; }

@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { NOME, type Divisione } from '../lib/contatti';
+
+const tutte = (await getCollection('divisioni')).map(e => e.data as Divisione).sort((a, b) => a.ordine - b.ordine);
+---
+<Base title="Pagina non trovata · Pietrabianca Resort" description="Questa pagina non c’è: da qui arrivi a SPA, feste, piscina e ristorante.">
+  <section class="nf" data-theme="dark" aria-labelledby="nfT">
+    <p class="eyebrow">Errore 404</p>
+    <h1 class="font-display" id="nfT"><span class="l1">Questa pagina</span> <span class="l2">non c’è.</span></h1>
+    <p class="nf-txt">Il link è vecchio o ha un errore di battitura. Riparti da qui:</p>
+    <ul>{tutte.map(d => <li><a class="font-display" href={d.href}>{NOME[d.id]}</a></li>)}</ul>
+    <a class="btn btn-white" href="/">Torna alla home</a>
+  </section>
+</Base>
+
+<style is:global>
+  .nf { min-height: min(100svh, 860px); padding: 160px var(--gut) var(--sec-y); background: var(--notte); color: #fff; box-sizing: border-box; }
+  .nf .eyebrow { color: var(--azz); }
+  .nf h1 { margin: 16px 0 24px; line-height: 1; font-weight: 500; }
+  .nf h1 .l1 { display: block; font-size: clamp(40px, 5.6vw, 88px); letter-spacing: .02em; text-transform: uppercase; }
+  .nf h1 .l2 { display: block; margin-top: .1em; padding-bottom: .08em; font-size: clamp(28px, 3.6vw, 56px); font-style: italic; font-weight: 400; }
+  .nf-txt { margin: 0 0 24px; max-width: 40ch; font-size: 17px; line-height: 1.6; opacity: .92; }
+  .nf ul { display: flex; flex-wrap: wrap; gap: 8px 32px; margin: 0 0 40px; padding: 0; list-style: none; }
+  .nf ul a { display: inline-block; padding: 8px 0; font-size: clamp(26px, 2.6vw, 38px); border-bottom: 1px solid rgba(155, 192, 223, .5); }
+</style>

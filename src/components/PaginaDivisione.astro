@@ -5,8 +5,9 @@ import { getCollection } from 'astro:content';
 import { prenotaAction, type Divisione, type DivisioneId } from '../lib/contatti';
 
 // titolo e titoloEm: le due righe dell'h1, maiuscolo + corsivo come la hero della home
-interface Props { id: DivisioneId; titolo: string; titoloEm: string; intro: string; foto: string; fotoAlt: string; focus?: string }
-const { id, titolo, titoloEm, intro, foto, fotoAlt, focus = '50% 50%' } = Astro.props;
+// eyebrow: di default il tag della divisione; le pagine ci mettono servizio e luogo (SEO locale)
+interface Props { id: DivisioneId; titolo: string; titoloEm: string; intro: string; foto: string; fotoAlt: string; focus?: string; eyebrow?: string }
+const { id, titolo, titoloEm, intro, foto, fotoAlt, focus = '50% 50%', eyebrow } = Astro.props;
 
 // foto fuori da git: il nome viene dalla pagina, il file sta in src/assets/cliente/
 const files = import.meta.glob<{ default: ImageMetadata }>('/src/assets/cliente/*', { eager: true });
@@ -20,11 +21,13 @@ const tutte = (await getCollection('divisioni')).map(e => e.data as Divisione);
 const mia = tutte.find(d => d.id === id)!;
 const altra = tutte.find(d => d.id === ALTRA[id])!;
 const azione = prenotaAction(mia);
+// il ristorante non ha una pagina: la card porta dritta al WhatsApp di Don Peppino
+const altraHref = altra.id === 'ristorante' ? prenotaAction(altra).href : altra.href;
 ---
 <section class="pd-hero" data-theme="dark">
   <Image src={img(foto)} alt={fotoAlt} widths={[800, 1200, 1800]} sizes="(min-width: 821px) 40vw, 100vw" loading="eager" fetchpriority="high" style={`object-position:${focus}`} />
   <div class="pd-txt">
-    <p class="eyebrow">{mia.tag}</p>
+    <p class="eyebrow">{eyebrow ?? mia.tag}</p>
     <h1 class="font-display"><span class="l1">{titolo}</span> <span class="l2">{titoloEm}</span></h1>
     <p class="pd-intro">{intro}</p>
     <div class="pd-cta">
@@ -37,13 +40,14 @@ const azione = prenotaAction(mia);
 <slot />
 
 <section class="pd-next" data-theme="light" aria-labelledby="pdNextTitle">
-  <h2 class="font-display" id="pdNextTitle" data-reveal>Completa l'esperienza</h2>
-  <a class="pd-card" href={altra.href} data-reveal>
+  <h2 class="font-display" id="pdNextTitle" data-reveal>Resta ancora un po’.</h2>
+  <a class="pd-card" href={altraHref} data-reveal>
     <div class="pd-pic"><Image src={img(altra.foto)} alt={altra.fotoAlt} widths={[480, 800]} sizes="(min-width: 821px) 40vw, 100vw" /></div>
     <div>
       <p class="pd-card-t font-display">{altra.titolo} <em>{altra.titoloEm}</em></p>
       <p>{altra.testo}</p>
       <span class="pd-card-p">{altra.prezzo}</span>
+      {altra.id === 'ristorante' && <span class="pd-card-p">Prenota un tavolo su WhatsApp →</span>}
     </div>
   </a>
 </section>
@@ -74,6 +78,7 @@ const azione = prenotaAction(mia);
   .pd-card-t em { font-style: italic; font-weight: 400; }
   .pd-card p:not(.pd-card-t) { margin: 0; max-width: 40ch; font-size: 15px; line-height: 1.6; }
   .pd-card-p { display: block; margin-top: 14px; font-size: 13px; font-weight: 700; color: var(--navy); }
+  .pd-card-p + .pd-card-p { margin-top: 6px; }
   .pd-card:hover .pd-card-t em, .pd-card:focus-visible .pd-card-t em { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
   @media (min-width: 821px) { .pd-card { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(32px, 6vw, 96px); max-width: 1100px; } }
 </style>

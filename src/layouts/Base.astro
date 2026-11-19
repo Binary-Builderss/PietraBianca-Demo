@@ -15,8 +15,11 @@ interface Props {
   description: string;
   divisione?: DivisioneId;
   navTheme?: 'dark' | 'light';
+  schema?: object;
 }
-const { title, description, divisione, navTheme = 'dark' } = Astro.props;
+const { title, description, divisione, navTheme = 'dark', schema } = Astro.props;
+// URL assoluti solo se SITE_URL è definita (astro.config.mjs): in demo niente canonical né og:url
+const canonical = Astro.site && new URL(Astro.url.pathname, Astro.site).href;
 ---
 <!doctype html>
 <html lang="it" data-divisione={divisione}>
@@ -27,6 +30,14 @@ const { title, description, divisione, navTheme = 'dark' } = Astro.props;
     <meta name="robots" content="noindex, nofollow" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:site_name" content="Pietrabianca Resort" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    {schema && <script type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g, '\\u003c')} />}
     <script is:inline>document.documentElement.classList.add('js')</script>
     {[manrope, bodoni, bodoniItalic].map(href => <link rel="preload" as="font" type="font/woff2" href={href} crossorigin />)}
     <slot name="head" />

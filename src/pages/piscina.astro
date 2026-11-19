@@ -27,15 +27,15 @@ const faq = [
   { d: 'Quando è aperta?', r: 'Tutti i giorni dalle 9:00 alle 18:00 in stagione. Si apre dal 30 maggio, tutti i giorni dal 15 giugno.' },
 ];
 ---
-<Base title="Piscina · Pietrabianca Resort" description="Tre piscine, lettini al sole e un'area food: orari, listino e regolamento del day-use." divisione="piscina">
-  <PaginaDivisione id="piscina" titolo="Tre piscine," titoloEm="un’estate intera." intro="Lettini al sole e un’area food per restare dal mattino a sera." foto="pool-parasol-sunbed.jpg" fotoAlt={piscina.fotoAlt} focus="50% 70%">
+<Base title="Piscina day use a Pomigliano d’Arco · Pietrabianca Resort" description="Tre piscine con lettino incluso nell’ingresso, area food e orari 9–18 in stagione. Listino, regole e FAQ prima di partire." divisione="piscina">
+  <PaginaDivisione id="piscina" eyebrow="Day use a Pomigliano d’Arco" titolo="Tre piscine," titoloEm="un’estate intera." intro="Dalle 9 alle 18, con il lettino compreso nell’ingresso e l’area food per il pranzo." foto="pool-parasol-sunbed.jpg" fotoAlt={piscina.fotoAlt} focus="50% 70%">
 
     <section class="pi-sez" data-theme="light" aria-labelledby="listinoT">
       <div data-reveal>
         <h2 class="font-display" id="listinoT">Una giornata, <em>il lettino incluso.</em></h2>
-        <p class="pi-nota">Il lettino è incluso. L’ombrellone è su richiesta.</p>
+        <p class="pi-nota">L’ombrellone è su richiesta.</p>
         <p class="pi-nota pi-nota-s">*Prezzi indicativi, da confermare</p>
-        <a class="btn btn-wa" href={info}>{piscina.prenota.label}</a>
+        <a class="btn btn-wa" href={info}>Scrivici su WhatsApp</a>
       </div>
       <dl class="pi-prezzi" data-reveal>
         <div><dt>Giorni feriali</dt><dd class="font-display">€13<span class="ast">*</span></dd></div>
@@ -87,6 +87,7 @@ const faq = [
   .pi-trav { background: var(--trav); }
   .pi-notte { background: var(--notte); color: #fff; }
   .pi-sez h2 { max-width: 18ch; }
+  #regoleT { scroll-margin-top: 140px; } /* tasto Orari della tabbar: l'eyebrow resta sotto la nav */
   .pi-sez .eyebrow { color: var(--navy); }
   .pi-notte h2 em { color: var(--azz); }
   .pi-nota { margin: 0 0 16px; max-width: 44ch; font-size: 15px; line-height: 1.6; }

@@ -9,12 +9,12 @@ import { CENTRALINO, telLink } from '../../lib/contatti';
     <h2 class="font-display" id="camereTitle">E se vuoi restare, <em>una camera.</em></h2>
     <p>Poche camere, a due passi da piscina e SPA: ti svegli e la giornata è già cominciata.</p>
     <p class="tipi">Tipologie: [DA INSERIRE CON IL CLIENTE]</p>
-    <a class="btn btn-navy" href={telLink(CENTRALINO)}>Chiama</a>
+    <a class="btn btn-navy" href={telLink(CENTRALINO)}>Chiama per le date</a>
   </div>
 </section>
 
 <style is:global>
-  .camere { display: grid; gap: 32px; padding: var(--sec-y) var(--gut); color: var(--notte); }
+  .camere { display: grid; gap: 32px; padding: var(--sec-y) var(--gut); color: var(--notte); border-top: 1px solid rgba(6, 54, 109, .12); } /* dopo Voti, stesso fondo pietra */
   .camere .txt p { max-width: 40ch; font-size: 16px; line-height: 1.6; }
   .camere .tipi { margin: 12px 0 24px; font-size: 14px; color: #4a5a70; }
   .camere .pic { aspect-ratio: 4/5; }

@@ -5,6 +5,7 @@ import Base from '../layouts/Base.astro';
 import PaginaDivisione from '../components/PaginaDivisione.astro';
 import massaggio from '../assets/cliente/spa-face-massage.jpg';
 import { waLink, type Divisione } from '../lib/contatti';
+import { spa as schemaSpa } from '../lib/schema';
 
 const spa = (await getCollection('divisioni')).map(e => e.data as Divisione).find(d => d.id === 'spa')!;
 const wa = (testo: string) => waLink(spa.whatsapp, testo);
@@ -17,8 +18,8 @@ const tecnologie = [
   { nome: 'Slim Swing', riga: 'Massaggio vibrante che stimola l’ossigenazione dei tessuti.' },
 ];
 ---
-<Base title="SPA · Pietrabianca Resort" description="Pietrabianca Space: percorso SPA, massaggi e tecnologie di estetica avanzata." divisione="spa">
-  <PaginaDivisione id="spa" titolo="Nessuna" titoloEm="fretta." intro="Lascia fuori ansia e frenesia: qui ci sono acqua calda, luci soffuse e silenzi che rigenerano." foto="v3-spa-hydromassage.jpg" fotoAlt={spa.fotoAlt} focus="50% 80%">
+<Base title="SPA a Pomigliano d’Arco · Pietrabianca Space" description="Percorso SPA, massaggi e tecnologie di estetica avanzata: KRONOS, B-Tonic e Slim Swing. A 20 minuti da Napoli, prenoti su WhatsApp." divisione="spa" schema={schemaSpa(Astro.site)}>
+  <PaginaDivisione id="spa" eyebrow="SPA a Pomigliano d’Arco" titolo="Nessuna" titoloEm="fretta." intro="Lascia fuori ansia e frenesia: qui ci sono acqua calda, luci soffuse e silenzi che rigenerano." foto="v3-spa-hydromassage.jpg" fotoAlt={spa.fotoAlt} focus="50% 80%">
 
     <section class="spa-sez" data-theme="light" aria-labelledby="percorsoT">
       <div data-reveal>
@@ -37,7 +38,7 @@ const tecnologie = [
         <h2 class="font-display" id="massaggiT">Mani lente, <em>pensieri leggeri.</em></h2>
         <ul class="spa-lista spa-1">{massaggi.map(m => <li>{m}</li>)}</ul>
         <p class="spa-nota">Durate e listino: [DA INSERIRE CON IL CLIENTE]</p>
-        <a class="btn btn-wa" href={wa('Vorrei informazioni sui massaggi')}>Chiedi dei massaggi</a>
+        <a class="btn btn-wa" href={wa('Ciao Pietrabianca Space! Vorrei prenotare un massaggio per … persone il …')}>Prenota un massaggio</a>
       </div>
     </section>
 
@@ -50,7 +51,7 @@ const tecnologie = [
           <article data-reveal>
             <h3 class="font-display">{t.nome}</h3>
             <p>{t.riga}</p>
-            <a class="lnk" href={wa(`Vorrei informazioni sul trattamento ${t.nome}`)}>Chiedi di {t.nome} su WhatsApp <span aria-hidden="true">→</span></a>
+            <a class="lnk" href={wa(`Ciao Pietrabianca Space! Vorrei informazioni sul trattamento ${t.nome}.`)}>Chiedi di {t.nome} su WhatsApp <span aria-hidden="true">→</span></a>
           </article>
         ))}
       </div>
@@ -61,7 +62,7 @@ const tecnologie = [
         <div><h2 class="font-display" id="pacchettoT">Percorso SPA + Menu di coppia <em>al Ristorante Don Peppino</em></h2></div>
         <div><p class="spa-nota">Percorso SPA e menu di coppia da Don Peppino, insieme.</p>
         <p class="spa-prezzo">Prezzo: [DA INSERIRE CON IL CLIENTE]</p>
-        <a class="btn btn-wa" href={wa('Vorrei informazioni sul pacchetto Percorso SPA + Menu di coppia al Ristorante Don Peppino')}>Chiedi il pacchetto</a></div>
+        <a class="btn btn-wa" href={wa('Ciao Pietrabianca Space! Vorremmo il pacchetto Percorso SPA + Menu di coppia da Don Peppino per il …')}>Chiedi il pacchetto</a></div>
       </div>
     </section>
 

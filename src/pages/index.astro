@@ -8,15 +8,16 @@ import Camere from '../components/home/Camere.astro';
 import Natale from '../components/home/Natale.astro';
 import Voti from '../components/home/Voti.astro';
 import Mappa from '../components/home/Mappa.astro';
+import { resort } from '../lib/schema';
 ---
-<Base title="Pietrabianca Resort" description="Demo privata del sito di Pietrabianca Resort.">
+<Base title="Pietrabianca Resort · SPA, feste, piscina e ristorante a Pomigliano d’Arco" description="SPA, feste, tre piscine e la cucina di Don Peppino in un unico posto, a 20 minuti da Napoli. Scrivici su WhatsApp." schema={resort(Astro.site)}>
   <Loader slot="fixed" />
   <Hero />
   <Manifesto />
   <Anime />
-  <Camere />
   <Natale />
   <Voti />
+  <Camere />
   <Mappa />
 </Base>
 

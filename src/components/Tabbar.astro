@@ -10,7 +10,8 @@ const corrente = tutte.find(d => d.id === divisione);
 // home: WhatsApp = SPA, Chiama = centralino, Prenota = foglio con le 4 divisioni
 const wa = corrente ?? tutte.find(d => d.id === 'spa')!;
 const tel = corrente ? corrente.tel : CENTRALINO;
-const prenota = corrente && prenotaAction(corrente);
+// piscina: Prenota aprirebbe lo stesso WhatsApp del tasto verde, quindi il terzo tasto porta a orari e regole
+const prenota = corrente && (corrente.id === 'piscina' ? { label: 'Orari', href: '#regoleT' } : prenotaAction(corrente));
 ---
 <nav class="tabbar" aria-label="Contatti rapidi">
   <a class="w" href={waLink(wa.whatsapp, wa.waTesto)}>WhatsApp</a>

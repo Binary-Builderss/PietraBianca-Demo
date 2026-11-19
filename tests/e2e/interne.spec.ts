@@ -12,17 +12,17 @@ test('/spa: prezzi con asterisco, listino massaggi da inserire, CTA verso WhatsA
   await page.goto('/spa');
   await expect(page.getByText('€35 di listino, in promo da €15 (kit escluso)*')).toBeVisible();
   await expect(page.getByText('[DA INSERIRE CON IL CLIENTE]').first()).toBeVisible();
-  // la CTA dell'hero (.pd-cta) ripete apposta il messaggio di «Prenota il percorso»
-  const tutte = page.locator('main a[href^="https://wa.me/"]');
+  // la CTA dell'hero (.pd-cta) ripete apposta il messaggio di «Prenota il percorso»; la card in fondo (.pd-next) va a Don Peppino
+  const tutte = page.locator('main a[href^="https://wa.me/"]:not(.pd-next a)');
   expect(await tutte.evaluateAll(as => as.map(a => a.getAttribute('href')!.split('?')[0]))).toEqual(Array(await tutte.count()).fill('https://wa.me/393496897941'));
-  const cta = page.locator('main a[href^="https://wa.me/"]:not(.pd-cta a)');
+  const cta = page.locator('main a[href^="https://wa.me/"]:not(.pd-cta a):not(.pd-next a)');
   const testi = await cta.evaluateAll(as => as.map(a => new URL(a.getAttribute('href')!).searchParams.get('text')));
   expect(new Set(testi).size).toBe(testi.length); // ogni CTA ha il suo testo
 });
-test('/spa: "Completa l\'esperienza" porta al ristorante', async ({ page }) => {
+test('/spa: "Resta ancora un po\'" porta al WhatsApp del ristorante', async ({ page }) => {
   await page.goto('/spa');
-  await expect(page.getByRole('heading', { name: "Completa l'esperienza" })).toBeVisible();
-  await expect(page.locator('.pd-next a')).toHaveAttribute('href', '/#ristorante');
+  await expect(page.getByRole('heading', { name: 'Resta ancora un po’.' })).toBeVisible();
+  await expect(page.locator('.pd-next a')).toHaveAttribute('href', /^https:\/\/wa\.me\/393938564501\?text=/);
 });
 for (const path of ['/spa', '/eventi', '/piscina']) test(`axe ${path}`, async ({ page }) => {
   await page.goto(path);

@@ -14,6 +14,10 @@ test('tabbar /eventi: Preventivo porta al form', async ({ page }) => {
   await expect(page.getByRole('navigation', { name: 'Contatti rapidi' }).getByRole('link', { name: 'Preventivo' }))
     .toHaveAttribute('href', '/eventi#preventivo');
 });
+test('tabbar /piscina: il terzo tasto porta a orari e regole', async ({ page }) => {
+  await page.goto('/piscina');
+  await expect(page.getByRole('navigation', { name: 'Contatti rapidi' }).getByRole('link', { name: 'Orari' })).toHaveAttribute('href', '#regoleT');
+});
 test('home: Prenota apre il foglio con 4 divisioni in ordine, Esc chiude', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('navigation', { name: 'Contatti rapidi' }).getByRole('button', { name: 'Prenota' }).click();

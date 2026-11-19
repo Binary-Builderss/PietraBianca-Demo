@@ -2,11 +2,13 @@
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { getCollection } from 'astro:content';
-import type { Divisione } from '../../lib/contatti';
+import { prenotaAction, type Divisione } from '../../lib/contatti';
 
 // foto fuori da git: il nome arriva dalla collection, il file da src/assets/cliente/
 const foto = import.meta.glob<{ default: ImageMetadata }>('/src/assets/cliente/*', { eager: true });
 const divisioni = (await getCollection('divisioni')).map(e => e.data as Divisione).sort((a, b) => a.ordine - b.ordine);
+// il ristorante non ha una pagina: la card porta dritta al WhatsApp di Don Peppino
+const linkCard = (d: Divisione) => d.id === 'ristorante' ? prenotaAction(d).href : d.href;
 const ALTEZZE = [74, 56, 66, 60]; // vh delle foto nel binario orizzontale (desktop), come la v4
 ---
 <section class="anime" id="anime" data-theme="dark" aria-labelledby="animeTitle">
@@ -20,13 +22,14 @@ const ALTEZZE = [74, 56, 66, 60]; // vh delle foto nel binario orizzontale (desk
       if (!img) throw new Error(`Foto mancante: src/assets/cliente/${d.foto} (lancia npm run foto)`);
       return (
         <article id={d.id === 'ristorante' ? 'ristorante' : undefined} style={`--h:${ALTEZZE[i % ALTEZZE.length]}vh;--r:${(img.width / img.height).toFixed(3)}`}>
-          <a class:list={['panel', { festa: d.id === 'eventi' }]} href={d.href}>
+          <a class:list={['panel', { festa: d.id === 'eventi' }]} href={linkCard(d)}>
             <div class="pic"><Image src={img} alt={d.fotoAlt} widths={[480, 800, 1200]} sizes="(min-width: 821px) 40vw, 100vw" /></div>
             <div class="txt">
               <p class="tag">{d.tag}</p>
               <h3 class="font-display">{d.titolo} <em>{d.titoloEm}</em></h3>
               <p>{d.testo}</p>
               <span class="price">{d.prezzo}</span>
+              {d.id === 'ristorante' && <span class="price">Prenota un tavolo su WhatsApp →</span>}
             </div>
           </a>
         </article>
@@ -58,6 +61,7 @@ const ALTEZZE = [74, 56, 66, 60]; // vh delle foto nel binario orizzontale (desk
   .panel h3 em { font-style: italic; font-weight: 400; }
   .panel p:not(.tag) { margin: 0; font-size: 15px; line-height: 1.6; opacity: .82; max-width: 34ch; }
   .panel .price { display: block; margin-top: 16px; font-size: 13px; font-weight: 600; color: var(--azz); }
+  .panel .price + .price { margin-top: 6px; }
   .panel.festa .price, .panel.festa .tag { color: var(--champ); }
   .panel:hover h3 em, .panel:focus-visible h3 em { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
   @media (min-width: 821px) { .pic { max-width: 520px; } }

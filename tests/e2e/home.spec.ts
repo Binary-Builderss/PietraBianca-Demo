@@ -5,7 +5,9 @@ test('4 pannelli in ordine con link', async ({ page }) => {
   await page.goto('/');
   const p = page.locator('#anime a.panel');
   await expect(p).toHaveCount(4);
-  expect(await p.evaluateAll(as => as.map(a => a.getAttribute('href')))).toEqual(['/spa', '/eventi', '/piscina', '/#ristorante']);
+  const href = await p.evaluateAll(as => as.map(a => a.getAttribute('href')!));
+  expect(href.slice(0, 3)).toEqual(['/spa', '/eventi', '/piscina']);
+  expect(href[3]).toMatch(/^https:\/\/wa\.me\/393938564501\?text=/); // ristorante: dritto al WhatsApp di Don Peppino
 });
 test('resize desktop→mobile: pannelli ancora cliccabili', async ({ page, browserName }) => {
   await page.setViewportSize({ width: 1440, height: 900 }); await page.goto('/');
