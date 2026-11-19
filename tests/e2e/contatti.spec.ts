@@ -27,3 +27,20 @@ test('iPhone SE: la tabbar non copre il footer', async ({ browser }) => {
   await page.goto('/'); await page.keyboard.press('End');
   await page.getByRole('contentinfo').getByRole('link').last().click({ trial: true }); // fallisce se intercettato
 });
+
+test('menu aperto su pagina light: Chiudi è bianco su fondo notte', async ({ page }) => {
+  await page.goto('/spa');
+  await page.getByRole('button', { name: 'Menu' }).click();
+  const chiudi = page.getByRole('button', { name: 'Chiudi', exact: true }).first();
+  await expect(chiudi).toHaveCSS('color', 'rgb(255, 255, 255)');
+  await expect(page.locator('#menu')).toHaveCSS('background-color', 'rgb(11, 31, 58)');
+  await expect(page.locator('.wm.white')).toHaveCSS('opacity', '1');
+});
+test('senza JS: i link delle divisioni restano visibili su mobile', async ({ browser }) => {
+  const ctx = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 375, height: 667 } });
+  const page = await ctx.newPage();
+  await page.goto('/spa');
+  await expect(page.getByRole('navigation', { name: 'Principale' }).getByRole('link', { name: 'Eventi' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Menu' })).toBeHidden();
+  await ctx.close();
+});
