@@ -1,0 +1,30 @@
+---
+import { Image } from 'astro:assets';
+import foto from '../../assets/cliente/pool-building-palm.jpg';
+import { CENTRALINO, telLink } from '../../lib/contatti';
+---
+<section class="camere" id="camere" data-theme="light" aria-labelledby="camereTitle">
+  <div class="pic"><Image src={foto} alt="La piscina con le palme e, sullo sfondo, l'edificio bianco del resort" widths={[480, 800, 1200]} sizes="(min-width: 821px) 40vw, 100vw" /></div>
+  <div class="txt" data-reveal>
+    <p class="eyebrow">Camere</p>
+    <h2 class="font-display" id="camereTitle">E se vuoi restare, <em>una camera.</em></h2>
+    <p>Poche camere, a due passi da piscina e SPA: ti svegli e la giornata è già cominciata.</p>
+    <p class="tipi">Tipologie: [DA INSERIRE CON IL CLIENTE]</p>
+    <a class="btn btn-navy" href={telLink(CENTRALINO)}>Chiama</a>
+  </div>
+</section>
+
+<style is:global>
+  .camere { display: grid; gap: 32px; padding: clamp(72px, 14vh, 140px) clamp(16px, 4vw, 48px); color: var(--notte); }
+  .camere h2, .natale h2, .voti h2, .mappa h2 { margin: 8px 0 16px; font-size: clamp(32px, 3.6vw, 56px); line-height: 1.05; font-weight: 500; }
+  .camere h2 em, .natale h2 em, .voti h2 em, .mappa h2 em { font-style: italic; font-weight: 400; }
+  .eyebrow { margin: 0; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; font-weight: 700; }
+  .camere .txt p:not(.eyebrow) { max-width: 40ch; font-size: 16px; line-height: 1.6; }
+  .camere .tipi { margin: 12px 0 24px; font-size: 14px; color: #4a5a70; }
+  .btn-navy { background: var(--navy); color: #fff; }
+  .camere .pic { aspect-ratio: 4/5; }
+  @media (min-width: 821px) {
+    .camere { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: clamp(32px, 6vw, 96px); }
+    .camere .pic { justify-self: end; width: 100%; }
+  }
+</style>

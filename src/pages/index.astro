@@ -2,21 +2,35 @@
 import Base from '../layouts/Base.astro';
 import Loader from '../components/home/Loader.astro';
 import Hero from '../components/home/Hero.astro';
+import Manifesto from '../components/home/Manifesto.astro';
+import Anime from '../components/home/Anime.astro';
+import Camere from '../components/home/Camere.astro';
+import Natale from '../components/home/Natale.astro';
+import Voti from '../components/home/Voti.astro';
+import Mappa from '../components/home/Mappa.astro';
 ---
 <Base title="Pietrabianca Resort" description="Demo privata del sito di Pietrabianca Resort.">
   <link slot="head" rel="preload" as="image" href="/cliente/hero.jpg" fetchpriority="high" />
-  <Loader />
+  <Loader slot="fixed" />
   <Hero />
+  <Manifesto />
+  <Anime />
+  <Camere />
+  <Natale />
+  <Voti />
+  <Mappa />
 </Base>
 
 <script>
   import { initIntro } from '../scripts/intro';
   import { initWater } from '../scripts/water';
+  import { initMotion } from '../scripts/motion';
 
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!reduce && matchMedia('(min-width: 821px) and (hover: hover) and (pointer: fine)').matches) {
+  const desktop = matchMedia('(min-width: 821px) and (hover: hover) and (pointer: fine)').matches;
+  if (!reduce && desktop) {
     // origin = object-position desktop della foto (50% 72%, Hero.astro)
     initWater(document.getElementById('heroMedia')!, { img: '/cliente/hero.jpg', mask: '/cliente/hero-mask.png', origin: [.5, .72] });
   }
-  initIntro({ reduce });
+  initIntro({ reduce }).then(() => initMotion({ reduce, desktop }));
 </script>

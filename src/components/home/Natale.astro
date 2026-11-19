@@ -1,0 +1,43 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import foto from '../../assets/cliente/xmas-gift-card.jpg';
+import { waLink, type Divisione } from '../../lib/contatti';
+
+const spa = (await getCollection('divisioni')).map(e => e.data as Divisione).find(d => d.id === 'spa')!;
+---
+<section class="natale" id="natale" data-theme="dark" aria-labelledby="nataleTitle">
+  <div class="pic"><Image src={foto} alt="Mani che tengono una gift card rossa davanti a un albero di Natale illuminato" widths={[480, 800]} sizes="(min-width: 821px) 34vw, 100vw" /></div>
+  <div class="txt">
+    <p class="eyebrow">Natale a Pietrabianca</p>
+    <h2 class="font-display" id="nataleTitle">Le feste, <em>a modo nostro.</em></h2>
+    <div class="offerte">
+      <article data-reveal>
+        <h3 class="font-display">Buoni regalo SPA</h3>
+        <p>Regala acqua calda, luci soffuse e un pomeriggio senza orologio.</p>
+        <a class="btn btn-wa" href={waLink(spa.whatsapp, 'Vorrei un buono regalo SPA')}>Chiedi su WhatsApp</a>
+      </article>
+      <article data-reveal>
+        <h3 class="font-display">Gala Dinner di Capodanno</h3>
+        <p>Cena di gala e musica dal vivo per salutare l'anno nuovo insieme.</p>
+        <a class="btn btn-champ" href="/eventi#preventivo">Chiedi un preventivo</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .natale { display: grid; gap: 40px; padding: clamp(72px, 14vh, 140px) clamp(16px, 4vw, 48px); background: var(--notte); color: #fff; }
+  .natale .eyebrow, .natale h2 em { color: var(--champ); }
+  .natale .pic { aspect-ratio: 4/5; }
+  .natale .offerte { display: grid; gap: 32px; margin-top: 32px; }
+  .natale article { padding-top: 24px; border-top: 1px solid rgba(200, 169, 106, .5); }
+  .natale h3 { margin: 0 0 10px; font-size: 26px; line-height: 1.15; font-weight: 500; }
+  .natale article p { max-width: 38ch; margin: 0 0 20px; font-size: 15px; line-height: 1.6; opacity: .85; }
+  .btn-wa { background: #25D366; color: #053; }
+  .btn-champ { background: var(--champ); color: var(--notte); }
+  @media (min-width: 821px) {
+    .natale { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: center; gap: clamp(32px, 6vw, 96px); }
+    .natale .offerte { grid-template-columns: 1fr 1fr; }
+  }
+</style>

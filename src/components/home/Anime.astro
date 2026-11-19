@@ -1,0 +1,66 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { getCollection } from 'astro:content';
+import type { Divisione } from '../../lib/contatti';
+
+// foto fuori da git: il nome arriva dalla collection, il file da src/assets/cliente/
+const foto = import.meta.glob<{ default: ImageMetadata }>('/src/assets/cliente/*', { eager: true });
+const divisioni = (await getCollection('divisioni')).map(e => e.data as Divisione).sort((a, b) => a.ordine - b.ordine);
+const ALTEZZE = [74, 56, 66, 60]; // vh delle foto nel binario orizzontale (desktop), come la v4
+---
+<section class="anime" id="anime" data-theme="dark" aria-labelledby="animeTitle">
+  <div class="anime-head">
+    <h2 class="font-display" id="animeTitle">Scegli da dove <em>iniziare</em>.</h2>
+    <div class="pips" aria-hidden="true">{divisioni.map((_, i) => <i class={i === 0 ? 'on' : undefined}></i>)}</div>
+  </div>
+  <div class="track" id="track">
+    {divisioni.map((d, i) => {
+      const img = foto[`/src/assets/cliente/${d.foto}`]?.default;
+      if (!img) throw new Error(`Foto mancante: src/assets/cliente/${d.foto} (lancia npm run foto)`);
+      return (
+        <article id={d.id === 'ristorante' ? 'ristorante' : undefined} style={`--h:${ALTEZZE[i % ALTEZZE.length]}vh;--r:${(img.width / img.height).toFixed(3)}`}>
+          <a class:list={['panel', { festa: d.id === 'eventi' }]} href={d.href}>
+            <div class="pic"><Image src={img} alt={d.fotoAlt} widths={[480, 800, 1200]} sizes="(min-width: 821px) 40vw, 100vw" /></div>
+            <div class="txt">
+              <p class="tag">{d.tag}</p>
+              <h3 class="font-display">{d.titolo} <em>{d.titoloEm}</em></h3>
+              <p>{d.testo}</p>
+              <span class="price">{d.prezzo}</span>
+            </div>
+          </a>
+        </article>
+      );
+    })}
+  </div>
+</section>
+
+<style is:global>
+  /* default verticale; orizzontale con pin solo con JS su desktop (motion.ts aggiunge .is-h) */
+  .anime { position: relative; background: var(--notte); color: #fff; overflow: hidden; overflow: clip; } /* clip: il focus da tastiera non può scrollarla di lato */
+  .anime-head { display: flex; justify-content: space-between; align-items: end; padding: 90px clamp(16px, 4vw, 48px) 0; }
+  .anime-head h2 { font-size: clamp(32px, 3.6vw, 56px); line-height: 1; font-weight: 500; }
+  .anime-head h2 em { font-style: italic; font-weight: 400; color: var(--azz); }
+  .pips { display: flex; gap: 10px; align-items: center; }
+  .anime:not(.is-h) .pips { display: none; } /* servono solo col binario orizzontale */
+  .pips i { display: block; width: 34px; height: 8px; border-radius: 50%; background: rgba(155, 192, 223, .25); transition: background-color .4s, transform .4s; }
+  .pips i.on { background: var(--azz); transform: scaleX(1.25); }
+  .track { display: flex; flex-direction: column; gap: 72px; padding: 48px clamp(16px, 4vw, 48px) 90px; }
+  .panel { display: flex; flex-direction: column; gap: 18px; }
+  .pic { position: relative; overflow: hidden; border-radius: 6px; aspect-ratio: 4/5; }
+  .pic img { position: absolute; top: 0; left: -4%; width: 108%; height: 100%; object-fit: cover; }
+  .panel .tag { margin: 0; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; font-weight: 700; color: var(--azz); }
+  .panel h3 { font-size: clamp(30px, 3vw, 48px); line-height: 1.08; letter-spacing: -.01em; margin: 10px 0 12px; max-width: 14ch; font-weight: 500; }
+  .panel h3 em { font-style: italic; font-weight: 400; }
+  .panel p:not(.tag) { margin: 0; font-size: 15px; line-height: 1.6; opacity: .82; max-width: 34ch; }
+  .panel .price { display: block; margin-top: 16px; font-size: 13px; font-weight: 600; color: var(--azz); }
+  .panel.festa .price, .panel.festa .tag { color: var(--champ); }
+  .panel:hover h3 em, .panel:focus-visible h3 em { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+  @media (min-width: 821px) { .pic { max-width: 520px; } }
+  .anime.is-h .anime-head { position: absolute; z-index: 3; top: clamp(96px, 13vh, 120px); left: 0; right: 0; padding-top: 0; }
+  .anime.is-h .track { flex-direction: row; align-items: center; width: max-content; height: 100svh; gap: 7vw; padding: clamp(140px, 19vh, 180px) 14vw 40px clamp(16px, 4vw, 48px); box-sizing: border-box; }
+  .anime.is-h .panel { flex-direction: row; align-items: flex-end; gap: 36px; }
+  .anime.is-h article:nth-child(even) .panel { align-items: flex-start; }
+  .anime.is-h .panel .pic { aspect-ratio: auto; max-width: none; height: var(--h); width: calc(var(--h) * var(--r)); }
+  .anime.is-h .panel .txt { width: 30ch; }
+</style>

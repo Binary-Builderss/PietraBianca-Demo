@@ -1,0 +1,24 @@
+---
+const MAPS = "https://www.google.com/maps/search/?api=1&query=Via+Pratola+Ponte+80+Pomigliano+d'Arco";
+---
+<!-- mappa statica: nessun iframe né richiesta a Google finché non si clicca (GDPR) -->
+<section class="mappa" id="dove" data-theme="light" aria-labelledby="mappaTitle">
+  <p class="eyebrow">Dove siamo</p>
+  <h2 class="font-display" id="mappaTitle"><em>Ti aspettiamo.</em></h2>
+  <div class="mappa-box" data-reveal>
+    <svg class="pin" viewBox="0 0 24 32" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 20 12 20s12-11 12-20C24 5.4 18.6 0 12 0zm0 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10z" /></svg>
+    <address>Via Pratola Ponte 80<br />80038 Pomigliano d'Arco (NA)<br /><span>A 20 minuti da Napoli</span></address>
+    <a class="btn btn-navy" href={MAPS} target="_blank" rel="noopener">Apri in Google Maps</a>
+  </div>
+</section>
+
+<style is:global>
+  .mappa { padding: clamp(72px, 14vh, 140px) clamp(16px, 4vw, 48px); text-align: center; color: var(--navy); }
+  .mappa .eyebrow { color: var(--notte); }
+  .mappa-box { display: flex; flex-direction: column; align-items: center; gap: 20px; max-width: 900px; margin: 32px auto 0; padding: clamp(40px, 8vw, 88px) 24px; border-radius: 12px; color: var(--notte);
+    /* "mappa" disegnata: griglia di strade su travertino, nessuna tile esterna */
+    background: linear-gradient(28deg, transparent 47%, rgba(155, 192, 223, .55) 47.5% 50.5%, transparent 51%), repeating-linear-gradient(0deg, transparent 0 78px, rgba(6, 54, 109, .08) 78px 80px), repeating-linear-gradient(90deg, transparent 0 118px, rgba(6, 54, 109, .08) 118px 120px), var(--trav); }
+  .mappa .pin { width: 28px; fill: var(--navy); }
+  .mappa address { font-style: normal; font-size: 17px; line-height: 1.6; font-weight: 600; }
+  .mappa address span { font-weight: 400; font-size: 14px; }
+</style>

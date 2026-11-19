@@ -29,8 +29,12 @@ const { title, description, divisione, navTheme = 'dark' } = Astro.props;
   <body>
     <a class="skip" href="#main">Salta al contenuto</a>
     <Nav divisione={divisione} navTheme={navTheme} />
-    <main id="main"><slot /></main>
-    <Footer />
+    <slot name="fixed" />
+    <!-- ScrollSmoother (home, desktop): solo il flusso della pagina; nav, tabbar e loader restano fuori, fissi -->
+    <div id="smooth-wrapper"><div id="smooth-content">
+      <main id="main"><slot /></main>
+      <Footer />
+    </div></div>
     <Tabbar divisione={divisione} />
     {!divisione && <PrenotaSheet />}
   </body>

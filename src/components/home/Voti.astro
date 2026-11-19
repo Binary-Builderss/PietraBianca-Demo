@@ -1,0 +1,35 @@
+---
+const DA_INSERIRE = '[DA INSERIRE CON IL CLIENTE]';
+const voti = [
+  { fonte: 'Google', cosa: 'SPA', voto: '4,9' },
+  { fonte: 'Tripadvisor', cosa: 'Resort', voto: DA_INSERIRE },
+];
+---
+<section class="voti" id="voti" data-theme="light" aria-labelledby="votiTitle">
+  <p class="eyebrow">Dicono di noi</p>
+  <h2 class="font-display" id="votiTitle">Chi passa, <em>ritorna.</em></h2>
+  <ul>
+    {voti.map(v => (
+      <li data-reveal>
+        <span class="fonte">{v.fonte} · {v.cosa}</span>
+        {v.voto === DA_INSERIRE
+          ? <strong class="manca">Voto {DA_INSERIRE}</strong>
+          : <strong class="font-display">{v.voto}<small> / 5</small></strong>}
+        <span>{DA_INSERIRE} recensioni</span>
+        <a href="#" aria-disabled="true">Leggi su {v.fonte} (in arrivo)</a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style is:global>
+  .voti { padding: clamp(72px, 14vh, 140px) clamp(16px, 4vw, 48px); background: var(--trav); color: var(--notte); }
+  .voti ul { display: grid; gap: 16px; margin: 32px 0 0; padding: 0; list-style: none; }
+  .voti li { display: flex; flex-direction: column; gap: 6px; padding: 28px; border-radius: 12px; background: var(--pietra); font-size: 14px; }
+  .voti .fonte { font-weight: 700; letter-spacing: .12em; text-transform: uppercase; font-size: 12px; }
+  .voti strong { font-size: clamp(40px, 5vw, 64px); line-height: 1.1; font-weight: 500; color: var(--navy); }
+  .voti strong.manca { font-size: 16px; font-weight: 600; line-height: 1.4; padding: 18px 0 10px; }
+  .voti strong small { font-family: var(--font-sans); font-size: 16px; font-weight: 600; }
+  .voti a[aria-disabled] { align-self: flex-start; padding: 12px 0; font-weight: 600; color: #4a5a70; pointer-events: none; text-decoration: underline; text-underline-offset: 3px; }
+  @media (min-width: 821px) { .voti ul { grid-template-columns: 1fr 1fr; max-width: 900px; } }
+</style>
