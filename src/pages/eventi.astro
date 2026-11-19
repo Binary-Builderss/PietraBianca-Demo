@@ -1,6 +1,125 @@
 ---
+import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import PaginaDivisione from '../components/PaginaDivisione.astro';
+import type { Divisione } from '../lib/contatti';
+
+const eventi = (await getCollection('divisioni')).map(e => e.data as Divisione).find(d => d.id === 'eventi')!;
+// solo tipologie con fonte in BRAND_IDENTITY §3.4 / §0 riga 10: niente capienze, menu o sale inventati
+const tipologie = ['Feste a tema', 'Pacchetti 18 anni', 'Comunioni e battesimi', 'Cene aziendali'];
+const tipiEvento = ['Diciottesimo', 'Festa a tema', 'Comunione/Battesimo', 'Dinner Show', 'Cena aziendale', 'Altro'];
 ---
-<Base title="Eventi · Pietrabianca Resort" description="Feste ed eventi privati" divisione="eventi" navTheme="light">
-  <h1 class="font-display text-4xl px-4 pt-40">Eventi</h1>
+<Base title="Eventi · Pietrabianca Resort" description="Feste a tema, diciottesimi, comunioni e battesimi, Dinner Show: chiedi un preventivo." divisione="eventi">
+  <PaginaDivisione id="eventi" titolo="Tu immagina la festa." intro="Noi le diamo il ritmo: dal pacchetto base con DJ alle formule su misura, con show e ospiti." foto="v3-event-pink-mise-en-place.jpg" fotoAlt={eventi.fotoAlt} focus="50% 40%">
+
+    <section class="ev-sez" data-theme="light" aria-labelledby="festeT">
+      <div data-reveal>
+        <p class="eyebrow">Feste</p>
+        <h2 class="font-display" id="festeT">Il tuo giorno, <em>a modo tuo.</em></h2>
+        <p class="ev-prezzo">{eventi.prezzo}</p>
+        <p class="ev-nota">*Prezzi indicativi, da confermare</p>
+        <a class="btn btn-navy" href="#preventivo">Chiedi un preventivo</a>
+      </div>
+      <ul class="ev-lista" data-reveal>{tipologie.map(t => <li>{t}</li>)}</ul>
+    </section>
+
+    <section class="ev-sez ev-notte" data-theme="dark" aria-labelledby="serataT">
+      <div data-reveal>
+        <p class="eyebrow">Dinner Show</p>
+        <h2 class="font-display" id="serataT">Cenare, cantare, <em>divertirsi.</em></h2>
+        <p class="ev-nota">Cena con spettacolo, solo su prenotazione. Calendario, prezzi e menu: [DA INSERIRE CON IL CLIENTE]</p>
+      </div>
+      <div data-reveal>
+        <p class="eyebrow">Capodanno</p>
+        <h2 class="font-display">Gala Dinner, <em>musica dal vivo.</em></h2>
+        <p class="ev-nota">La notte di fine anno si apre con una cena di gala.</p>
+      </div>
+    </section>
+
+    <section class="ev-sez ev-trav" data-theme="light" aria-labelledby="preventivoT">
+      <div data-reveal>
+        <p class="eyebrow">Preventivo</p>
+        <h2 class="font-display" id="preventivoT">Raccontaci <em>la tua festa.</em></h2>
+        <p class="ev-nota">Compila il modulo: ti ricontatta lo staff eventi.</p>
+      </div>
+      <div data-reveal>
+        <form id="preventivo" class="ev-form">
+          <label>Tipo evento
+            <select name="tipo" required>
+              <option value="" disabled selected>Scegli</option>
+              {tipiEvento.map(t => <option value={t}>{t}</option>)}
+            </select>
+          </label>
+          <label>Data
+            <input type="date" name="data" required />
+          </label>
+          <label>Numero di invitati
+            <input type="number" name="invitati" min="10" inputmode="numeric" required />
+          </label>
+          <label>Nome
+            <input type="text" name="nome" autocomplete="name" required />
+          </label>
+          <label>Telefono
+            <input type="tel" name="telefono" autocomplete="tel" required />
+          </label>
+          <label>Email
+            <input type="email" name="email" autocomplete="email" required />
+          </label>
+          <label class="ev-privacy">
+            <input type="checkbox" name="privacy" required />
+            <span>Ho letto l'informativa privacy [DA INSERIRE CON IL CLIENTE: testo informativa]</span>
+          </label>
+          <button class="btn btn-navy" type="submit">Invia richiesta</button>
+        </form>
+      </div>
+    </section>
+
+  </PaginaDivisione>
 </Base>
+
+<script>
+  import { initMotion } from '../scripts/motion';
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // desktop: false = niente ScrollSmoother: in una pagina con form lo scroll morbido ritarda la posizione dei campi (click e focus al volo cadono a vuoto)
+  initMotion({ reduce, desktop: false });
+
+  // demo: nessuna richiesta di rete, il form viene sostituito dalla conferma
+  const form = document.querySelector<HTMLFormElement>('form#preventivo');
+  form?.addEventListener('submit', e => {
+    e.preventDefault();
+    const ok = document.createElement('p');
+    ok.setAttribute('role', 'status');
+    ok.className = 'ev-ok';
+    ok.textContent = 'Richiesta di prova: in questa demo non viene inviato nulla. Nel sito vero arriva via email e WhatsApp allo staff eventi.';
+    ok.tabIndex = -1;
+    form.replaceWith(ok);
+    ok.focus(); // il form sparisce e la pagina si accorcia: la conferma deve restare in vista
+  });
+</script>
+
+<style is:global>
+  .ev-sez { display: grid; gap: 40px; padding: clamp(64px, 11vh, 112px) clamp(16px, 4vw, 48px); color: var(--notte); }
+  .ev-trav { background: var(--trav); }
+  .ev-notte { background: var(--notte); color: #fff; }
+  .ev-sez h2 { margin: 8px 0 20px; font-size: clamp(32px, 3.6vw, 56px); line-height: 1.05; font-weight: 500; max-width: 18ch; }
+  .ev-sez h2 em { font-style: italic; font-weight: 400; }
+  .ev-sez .eyebrow { color: var(--navy); }
+  .ev-notte .eyebrow, .ev-notte h2 em { color: var(--champ); } /* champ solo su fondo scuro */
+  .ev-prezzo { margin: 0 0 6px; font-size: 18px; font-weight: 700; }
+  .ev-nota { margin: 0 0 24px; max-width: 44ch; font-size: 15px; line-height: 1.6; }
+  .ev-lista { list-style: none; margin: 0; padding: 0; display: grid; align-content: start; }
+  .ev-lista li { padding: 14px 0; border-top: 1px solid rgba(6, 54, 109, .25); font-size: 16px; }
+  .ev-form { display: grid; gap: 18px; max-width: 520px; scroll-margin-top: 120px; }
+  .ev-form label { display: grid; gap: 6px; font-size: 13px; font-weight: 700; letter-spacing: .04em; }
+  .ev-form select, .ev-form input:not([type='checkbox']) { width: 100%; min-height: 48px; padding: 10px 14px; border: 1px solid rgba(6, 54, 109, .45); border-radius: 6px; background: var(--pietra); color: var(--notte); font: inherit; font-size: 16px; font-weight: 400; letter-spacing: 0; }
+  .ev-form :is(select, input):focus-visible { outline-color: var(--navy); }
+  .ev-form .ev-privacy { grid-template-columns: auto 1fr; align-items: start; gap: 12px; font-size: 14px; font-weight: 400; letter-spacing: 0; line-height: 1.5; }
+  .ev-privacy input { width: 22px; height: 22px; margin: 0; accent-color: var(--navy); }
+  .ev-form .btn { justify-self: start; }
+  .ev-ok:focus { outline: none; }
+  .ev-ok { margin: 0; max-width: 44ch; padding: 24px; border-left: 3px solid var(--navy); background: var(--pietra); font-size: 17px; line-height: 1.6; }
+  @media (min-width: 821px) {
+    .ev-sez:not(.ev-notte) { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; gap: clamp(32px, 6vw, 96px); }
+    .ev-notte { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(32px, 6vw, 96px); }
+  }
+</style>

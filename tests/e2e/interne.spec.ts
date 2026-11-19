@@ -22,7 +22,24 @@ test('/spa: "Completa l\'esperienza" porta al ristorante', async ({ page }) => {
   await expect(page.getByRole('heading', { name: "Completa l'esperienza" })).toBeVisible();
   await expect(page.locator('.pd-next a')).toHaveAttribute('href', '/#ristorante');
 });
-for (const path of ['/spa']) test(`axe ${path}`, async ({ page }) => {
+for (const path of ['/spa', '/eventi']) test(`axe ${path}`, async ({ page }) => {
   await page.goto(path);
   expect((await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze()).violations).toEqual([]);
+});
+test('/eventi: form valida, non fa richieste, mostra conferma demo', async ({ page }) => {
+  await page.goto('/eventi#preventivo');
+  const posts: string[] = []; page.on('request', r => r.method() !== 'GET' && posts.push(r.url()));
+  const f = page.locator('form#preventivo');
+  await f.getByRole('button', { name: /invia/i }).click();
+  await expect(page.getByRole('status')).toHaveCount(0);           // bloccato dalla validazione nativa
+  await f.getByLabel(/tipo evento/i).selectOption('Diciottesimo');
+  await f.getByLabel(/data/i).fill('2027-03-14');
+  await f.getByLabel(/invitati/i).fill('80');
+  await f.getByLabel(/nome/i).fill('Prova');
+  await f.getByLabel(/telefono/i).fill('3330000000');
+  await f.getByLabel(/email/i).fill('prova@example.com');
+  await f.getByLabel(/privacy/i).check();
+  await f.getByRole('button', { name: /invia/i }).click();
+  await expect(page.getByRole('status')).toContainText('non viene inviato nulla');
+  expect(posts).toEqual([]);
 });
