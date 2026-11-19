@@ -74,3 +74,15 @@ test('/piscina: prezzi, regola cibo, FAQ apribili, Info su WhatsApp', async ({ p
   await expect(faq.first()).toHaveAttribute('open', '');
   await expect(page.locator('main a[href^="https://wa.me/393496897941?text="]').first()).toBeVisible();
 });
+test('/piscina desktop: con tutte le FAQ aperte il fondo pagina resta raggiungibile', async ({ page }, info) => {
+  test.skip(info.project.name !== 'desktop', 'ScrollSmoother solo con puntatore fine');
+  await page.goto('/piscina');
+  await page.waitForTimeout(1000);
+  for (const s of await page.locator('details summary').all()) await s.click();
+  await page.waitForTimeout(500);
+  for (let i = 0; i < 40; i++) { await page.mouse.wheel(0, 1000); await page.waitForTimeout(100); }
+  await page.waitForTimeout(1500);
+  const last = page.locator('footer a').last();
+  await expect(last).toBeInViewport();
+  await last.click({ trial: true });
+});

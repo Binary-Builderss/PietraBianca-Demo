@@ -21,7 +21,7 @@ const faq = [
   { d: 'Serve prenotare?', r: 'No, in piscina non si prenota: si entra fino a esaurimento posti.' },
   { d: 'Il lettino è incluso?', r: 'Sì, il lettino è compreso nell’ingresso*.' },
   { d: 'E l’ombrellone?', r: `L’ombrellone è su richiesta. Costo: ${ND}` },
-  { d: 'Posso portare da mangiare?', r: `No, è vietato. Per pranzo e merenda c’è l’area food: ${food.join(', ').toLowerCase()}.` },
+  { d: 'Posso portare da mangiare?', r: `No, è vietato. C’è l’area food: ${food.join(', ').toLowerCase()}.` },
   { d: 'Posso portare la borsa frigo?', r: ND },
   { d: 'Come funziona l’ingresso per i bambini?', r: `Ingresso e altezza: ${ND}` },
   { d: 'Quando è aperta?', r: 'Tutti i giorni dalle 9:00 alle 18:00 in stagione. Si apre dal 30 maggio, tutti i giorni dal 15 giugno.' },
@@ -33,7 +33,7 @@ const faq = [
     <section class="pi-sez" data-theme="light" aria-labelledby="listinoT">
       <div data-reveal>
         <p class="eyebrow">Listino</p>
-        <h2 class="font-display" id="listinoT">Una giornata, <em>un solo prezzo.</em></h2>
+        <h2 class="font-display" id="listinoT">Una giornata, <em>il lettino incluso.</em></h2>
         <p class="pi-nota">Il lettino è incluso. L’ombrellone è su richiesta.</p>
         <p class="pi-nota pi-nota-s">*Prezzi indicativi, da confermare</p>
         <a class="btn btn-wa" href={info}>{piscina.prenota.label}</a>
