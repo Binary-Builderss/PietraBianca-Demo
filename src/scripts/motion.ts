@@ -24,8 +24,9 @@ export function initMotion({ reduce, desktop }: { reduce: boolean; desktop: bool
 }
 
 function start(mm: gsap.MatchMedia, reduce: boolean, desktop: boolean) {
-  const anime = document.getElementById('anime')!;
-  const track = document.getElementById('track')!;
+  // anime e track esistono solo in home: le pagine interne usano solo tema nav, scroll morbido e [data-reveal]
+  const anime = document.getElementById('anime');
+  const track = document.getElementById('track');
   const articles = gsap.utils.toArray<HTMLElement>('#track > article');
   // y di scroll che porta in vista un pannello del binario orizzontale (null = non siamo in modalità pin)
   let pinY: (el: Element) => number | null = () => null;
@@ -40,20 +41,20 @@ function start(mm: gsap.MatchMedia, reduce: boolean, desktop: boolean) {
   };
   ScrollTrigger.create({ start: 0, end: 'max', onUpdate: tema, onRefresh: tema });
   tema();
-  document.documentElement.dataset.motion = ''; // il tema è vivo: spegne la barra di riserva della nav (index.astro)
+  document.documentElement.dataset.motion = ''; // il tema è vivo: spegne la barra di riserva della nav (global.css)
 
   if (!reduce) {
     // prima dei ScrollTrigger che misurano posizioni (il tema sopra legge solo i rect); nav, tabbar e cairn sono fuori da #smooth-wrapper.
     // Fuori dalla matchMedia: in GSAP 3.13 uno smoother ucciso lascia il body alto quanto la pagina desktop.
     // un desktop rimpicciolito sotto gli 821 px tiene lo scroll morbido, va bene
     if (desktop) {
-      const sm = ScrollSmoother.create({ smooth: .8, effects: false, onFocusIn: (_, e) => !track.contains(e.target as Node) });
+      const sm = ScrollSmoother.create({ smooth: .8, effects: false, onFocusIn: (_, e) => !track?.contains(e.target as Node) });
       // il wrapper fisso ha overflow:hidden e il browser (ancore, scrollIntoView, cerca nella pagina) scrolla lui:
       // si riporta a 0 e lo spostamento passa allo smoother
       const w = sm.wrapper();
       w.addEventListener('scroll', () => { const d = w.scrollTop; if (d) { w.scrollTop = 0; sm.scrollTo(sm.scrollTop() + d, false); } });
     }
-    mm.add('(min-width: 821px)', () => {
+    if (anime && track) mm.add('(min-width: 821px)', () => {
       gsap.to('#heroMedia', { yPercent: 16, ease: 'none', scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true } });
 
       anime.classList.add('is-h');
@@ -79,16 +80,18 @@ function start(mm: gsap.MatchMedia, reduce: boolean, desktop: boolean) {
       };
       return () => { anime.classList.remove('is-h'); pinY = () => null; };
     });
-    mm.add('(max-width: 820px)', () => {
+    if (anime && track) mm.add('(max-width: 820px)', () => {
       articles.forEach(a => reveal(a, { trigger: a, start: 'top 88%', end: 'top 35%', scrub: true }, { trigger: a, start: 'top 62%' }));
     });
 
-    if (desktop) magnetic(document.getElementById('primaryCta')!);
+    if (desktop && anime) magnetic(document.getElementById('primaryCta')!);
     mm.add('all', () => {
-      gsap.to('.hero-txt', { yPercent: -25, opacity: 0, ease: 'none', scrollTrigger: { trigger: '#hero', start: '45% top', end: 'bottom top', scrub: true } });
+      if (anime) {
+        gsap.to('.hero-txt', { yPercent: -25, opacity: 0, ease: 'none', scrollTrigger: { trigger: '#hero', start: '45% top', end: 'bottom top', scrub: true } });
 
-      const lines = SplitText.create('#manifesto', { type: 'lines', mask: 'lines', aria: 'none' });
-      gsap.from(lines.lines, { yPercent: 100, duration: 1, ease: 'power3.out', stagger: .15, onComplete: () => lines.revert(), scrollTrigger: { trigger: '#manifesto', start: 'top 78%' } });
+        const lines = SplitText.create('#manifesto', { type: 'lines', mask: 'lines', aria: 'none' });
+        gsap.from(lines.lines, { yPercent: 100, duration: 1, ease: 'power3.out', stagger: .15, onComplete: () => lines.revert(), scrollTrigger: { trigger: '#manifesto', start: 'top 78%' } });
+      }
       gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach(el =>
         gsap.from(el, { y: 24, opacity: 0, duration: .9, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 85%' } }));
     });
@@ -103,7 +106,7 @@ function start(mm: gsap.MatchMedia, reduce: boolean, desktop: boolean) {
   };
   const byHash = () => location.hash.length > 1 ? document.getElementById(location.hash.slice(1)) : null;
   addEventListener('hashchange', () => goTo(byHash(), true));
-  track.addEventListener('focusin', e => goTo(e.target as Element, true));
+  track?.addEventListener('focusin', e => goTo(e.target as Element, true));
   if (byHash()) goTo(byHash(), false);
 }
 
