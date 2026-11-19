@@ -43,3 +43,21 @@ test('desktop: canvas WebGL attivo; iPhone: nessun canvas', async ({ page }, inf
   await page.goto('/'); await expect(page.locator('html')).toHaveAttribute('data-intro', 'done', { timeout: 6000 });
   await expect(page.locator('.hero canvas')).toHaveCount(info.project.name === 'desktop' ? 1 : 0);
 });
+test('contesto WebGL perso: torna la foto, nessun errore', async ({ page }, info) => {
+  test.skip(info.project.name !== 'desktop', 'acqua solo su desktop');
+  const errs: string[] = []; page.on('pageerror', e => errs.push(e.message));
+  page.on('console', m => m.type() === 'error' && errs.push(m.text()));
+  await page.goto('/');
+  await expect(page.locator('.hero canvas')).toHaveCount(1, { timeout: 6000 });
+  await page.evaluate(() => (document.querySelector('.hero canvas') as HTMLCanvasElement).getContext('webgl')!.getExtension('WEBGL_lose_context')!.loseContext());
+  await expect(page.locator('.hero canvas')).toHaveCount(0);
+  await expect(page.locator('.hero img')).toBeVisible();
+  expect(errs).toEqual([]);
+});
+test('JS dei moduli che non arriva: loader via, titolo e logo visibili', async ({ page }) => {
+  await page.route('**/_astro/*.js', r => r.abort());
+  await page.goto('/');
+  await expect(page.locator('#loader')).toBeHidden({ timeout: 6000 });
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await expect(page.locator('.brand .wm.white.logo')).toBeVisible();
+});

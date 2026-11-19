@@ -38,7 +38,7 @@ export function initIntro({ reduce }: { reduce: boolean }): Promise<void> {
       finished = true;
       clearTimeout(safety);
       loader.remove();
-      if (!tl) dock();
+      if (!tl) { gsap.set(stones, { opacity: 1 }); dock(); }
       cairn.classList.add('on-dark', 'docked');
       try { sessionStorage.setItem('pb-intro', '1'); } catch { /* Safari privato: l'intro si ripete, pazienza */ }
       root.dataset.intro = 'done';
@@ -48,6 +48,7 @@ export function initIntro({ reduce }: { reduce: boolean }): Promise<void> {
     const safety = setTimeout(() => { if (loader.isConnected) tl ? tl.progress(1) : finish(); }, Math.max(0, SAFETY_MS - performance.now()));
 
     if (reduce || root.classList.contains('no-intro')) return finish();
+    gsap.set(stones, { opacity: 0 }); // niente cairn già montato mentre aspettiamo foto e font
 
     // foto decodificata e font pronti, così il reveal non salta
     Promise.all([img.decode().catch(() => {}), document.fonts.ready]).then(() => {
@@ -69,16 +70,16 @@ export function initIntro({ reduce }: { reduce: boolean }): Promise<void> {
 
 function timeline(title: SplitText, stones: HTMLElement[], cairn: HTMLElement, loader: HTMLElement, mobile: boolean,
   dock: (d: number) => gsap.core.Tween, finish: () => void) {
-  const k = mobile ? .6 : 1; // sotto gli 821 px il loader (sassi + sipario) sta entro 1,8 s
+  const k = mobile ? .6 : 1; // sotto gli 821 px il loader (sassi + volo nel marchio + sipario) sta entro 1,8 s
   const tl = gsap.timeline({ defaults: { ease: 'expo.out' }, onComplete: () => { title.revert(); finish(); } });
   [...stones].reverse().forEach((s, i) => {
     const at = i * .11 * k;
-    tl.from(s, { y: -40, opacity: 0, duration: .3 * k, ease: 'power2.in' }, at)
+    tl.fromTo(s, { y: -40, opacity: 0 }, { y: 0, opacity: 1, duration: .3 * k, ease: 'power2.in' }, at)
       .fromTo(s, { scaleY: .75 }, { scaleY: 1, duration: .35 * k, ease: 'back.out(3)' }, at + .3 * k);
   });
   tl.addLabel('open', `+=${.15 * k}`)
     .add(() => cairn.classList.add('on-dark'), 'open')
-    .add(dock(1), 'open')
+    .add(dock(mobile ? .7 : 1), 'open')
     .to(loader, { clipPath: 'inset(0 0 100% 0)', duration: mobile ? .7 : 1, ease: 'expo.inOut', onComplete: () => loader.remove() }, 'open')
     .fromTo('#heroMedia', { clipPath: 'inset(47% 0% 53% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.5, ease: 'expo.inOut', clearProps: 'clipPath' }, 'open')
     .fromTo('#heroLayer', { scale: 1.12 }, { scale: 1, duration: 1.8 }, 'open')
