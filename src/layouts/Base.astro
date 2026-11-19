@@ -1,10 +1,11 @@
 ---
 import '../styles/global.css';
+import type { DivisioneId } from '../lib/contatti';
 
 interface Props {
   title: string;
   description: string;
-  divisione?: 'spa' | 'eventi' | 'piscina' | 'ristorante'; // diventa DivisioneId nel Task 2
+  divisione?: DivisioneId;
   navTheme?: 'dark' | 'light';
 }
 const { title, description, divisione, navTheme = 'dark' } = Astro.props;

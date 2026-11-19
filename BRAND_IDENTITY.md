@@ -294,7 +294,7 @@ Scala tipografica (mobile → desktop): H1 40→72px · H2 32→48 · H3 24→32
 4. **Un percorso per divisione**: da ogni pagina si arriva a una conversione in al massimo 2 tap.
 5. **Cross-selling contestuale**: in fondo a ogni pagina, la card "Completa l'esperienza" (es. SPA → "Aggiungi una cena da Don Peppino").
 6. **Trasparenza**: prezzi "a partire da", regolamenti e FAQ visibili (risponde alle criticità emerse nelle recensioni).
-7. **Accessibilità**: contrasto AA, calcolato con la formula WCAG sui valori HEX qui sopra: Blu Pietrabianca su Bianco Pietra 10,3:1 ✔ · Notte su Bianco Pietra 15,3:1 ✔ · Champagne su Notte 7,4:1 ✔ · Azzurro Piscina su Notte 8,9:1 ✔ · **Champagne su Bianco Pietra 2,1:1 ✘, quindi mai come colore del testo su sfondo chiaro**. Inoltre focus visibili, `alt` descrittivi, rispetto di `prefers-reduced-motion`.
+7. **Accessibilità**: contrasto AA, calcolato con la formula WCAG sui valori HEX qui sopra: Blu Pietrabianca su Bianco Pietra 11,1:1 ✔ · Notte su Bianco Pietra 15,3:1 ✔ · Champagne su Notte 7,3:1 ✔ · Azzurro Piscina su Notte 8,7:1 ✔ · **Champagne su Bianco Pietra 2,1:1 ✘, quindi mai come colore del testo su sfondo chiaro**. Inoltre focus visibili, `alt` descrittivi, rispetto di `prefers-reduced-motion`.
 8. **Micro-animazioni sobrie**: fade e parallax leggeri, niente effetti "wow" che rallentano.
 
 ---
