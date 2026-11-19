@@ -34,7 +34,7 @@ test('menu aperto su pagina light: Chiudi è bianco su fondo notte', async ({ pa
   const chiudi = page.getByRole('button', { name: 'Chiudi', exact: true }).first();
   await expect(chiudi).toHaveCSS('color', 'rgb(255, 255, 255)');
   await expect(page.locator('#menu')).toHaveCSS('background-color', 'rgb(11, 31, 58)');
-  await expect(page.locator('.wm.white')).toHaveCSS('opacity', '1');
+  await expect(page.locator('.wm.white:visible')).toHaveCSS('opacity', '1');
 });
 test('senza JS: i link delle divisioni restano visibili su mobile', async ({ browser }) => {
   const ctx = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 375, height: 667 } });

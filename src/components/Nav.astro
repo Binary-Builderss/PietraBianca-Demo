@@ -3,6 +3,8 @@ import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import wmWhite from '../assets/cliente/wordmark-white.png';
 import wmBlue from '../assets/cliente/wordmark-blue.png';
+import logoWhite from '../assets/cliente/logo-white.png';
+import logoBlue from '../assets/cliente/logo-blue.png';
 import { NOME, prenotaAction, type Divisione, type DivisioneId } from '../lib/contatti';
 
 interface Props { divisione?: DivisioneId; navTheme?: 'dark' | 'light' }
@@ -15,8 +17,10 @@ const prenota = corrente && prenotaAction(corrente);
 <header class="nav" id="nav" data-nav-theme={navTheme}>
   <a href="/" class="brand" aria-label="Pietrabianca Resort, home" translate="no">
     <span id="navMark"></span>
-    <Image class="wm white" src={wmWhite} width={262} alt="" loading="eager" />
-    <Image class="wm blue" src={wmBlue} width={262} alt="" loading="eager" />
+    <Image class="wm white mark" src={wmWhite} width={262} alt="" loading="eager" />
+    <Image class="wm blue mark" src={wmBlue} width={262} alt="" loading="eager" />
+    <Image class="wm white logo" src={logoWhite} width={262} alt="" loading="eager" />
+    <Image class="wm blue logo" src={logoBlue} width={262} alt="" loading="eager" />
   </a>
   <nav aria-label="Principale">
     <button class="menu-btn" aria-expanded="false" aria-controls="menu" id="menuBtn">Menu</button>
@@ -52,6 +56,9 @@ const prenota = corrente && prenotaAction(corrente);
   .brand .wm.blue { opacity: 0; }
   .nav[data-nav-theme='light'] .wm.white { opacity: 0; }
   .nav[data-nav-theme='light'] .wm.blue { opacity: 1; }
+  /* logo intero (sassi statici) senza JS e senza cairn; solo scritta quando i sassi del cairn (home, intro.ts) sono nel marchio */
+  .brand .wm.mark, html.js:has(#cairn i) .brand .wm.logo { display: none; }
+  html.js:has(#cairn i) .brand .wm.mark { display: block; }
   #navMark { position: absolute; left: calc(200px * var(--s)); top: calc(20px * var(--s)); width: calc(135px * var(--s)); height: calc(108px * var(--s)); }
   .nav ul { position: relative; display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; font-size: 13px; font-weight: 600; align-items: center; }
   .nav ul a:not(.btn) { position: relative; }

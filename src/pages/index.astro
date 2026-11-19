@@ -1,6 +1,22 @@
 ---
 import Base from '../layouts/Base.astro';
+import Loader from '../components/home/Loader.astro';
+import Hero from '../components/home/Hero.astro';
 ---
 <Base title="Pietrabianca Resort" description="Demo privata del sito di Pietrabianca Resort.">
-  <h1 class="font-display text-4xl">Pietrabianca</h1>
+  <link slot="head" rel="preload" as="image" href="/cliente/hero.jpg" fetchpriority="high" />
+  <Loader />
+  <Hero />
 </Base>
+
+<script>
+  import { initIntro } from '../scripts/intro';
+  import { initWater } from '../scripts/water';
+
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce && matchMedia('(min-width: 821px) and (hover: hover) and (pointer: fine)').matches) {
+    // origin = object-position desktop della foto (50% 72%, Hero.astro)
+    initWater(document.getElementById('heroMedia')!, { img: '/cliente/hero.jpg', mask: '/cliente/hero-mask.png', origin: [.5, .72] });
+  }
+  initIntro({ reduce });
+</script>

@@ -1,0 +1,24 @@
+<!-- Loader della prima visita: i sassi del logo (creati da intro.ts) si impilano e atterrano in #navMark. -->
+<script is:inline>
+  // prima del paint: alla seconda visita o con reduce il loader non compare nemmeno per un frame
+  (function () {
+    var skip = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    try { skip = skip || sessionStorage.getItem('pb-intro') === '1'; } catch (e) { /* storage bloccato */ }
+    if (skip) document.documentElement.classList.add('no-intro');
+  })();
+</script>
+<div id="loader" aria-hidden="true"></div>
+<div id="cairn" aria-hidden="true"></div>
+
+<style is:global>
+  #loader { position: fixed; inset: 0; z-index: 100; background: var(--pietra); clip-path: inset(0 0 0 0); }
+  /* rete di sicurezza se il JS non arriva mai: stessa scadenza (4,5 s) del timeout in intro.ts */
+  #loader { animation: pb-loader-safety 0s 4.5s forwards; }
+  @keyframes pb-loader-safety { to { visibility: hidden; } }
+  html:not(.js) #loader, html:not(.js) #cairn, html.no-intro #loader { display: none; }
+  #cairn { position: fixed; z-index: 101; left: 50%; top: 50%; width: 150px; height: 120px; margin: -60px 0 0 -75px; pointer-events: none; transform-origin: 0 0; }
+  #cairn i { position: absolute; display: block; border-radius: 50%; transform-origin: 50% 100%; background-color: var(--c); transition: background-color .45s ease; }
+  /* nel marchio: bianchi sul fondo scuro, colori del logo quando la nav è light (Task 5), bianchi a menu aperto */
+  #cairn.on-dark i { background-color: #fff; }
+  html:has(.nav[data-nav-theme='light']:not(.open)) #cairn.docked i { background-color: var(--c); }
+</style>
