@@ -21,7 +21,7 @@ const divisioni = defineCollection({
       tipo: z.enum(['whatsapp', 'ancora']),
       label: z.string(),
       target: z.string().optional(),
-    }),
+    }).refine(p => p.tipo !== 'ancora' || !!p.target, { message: "prenota.tipo 'ancora' richiede target", path: ['target'] }),
     foto: z.string(), // nome file in src/assets/cliente/ (non image(): le foto sono fuori da git)
     fotoAlt: z.string(),
   }),

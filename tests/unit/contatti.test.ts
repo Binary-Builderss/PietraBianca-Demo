@@ -10,3 +10,7 @@ test('prenota eventi è un\'ancora', () => {
   expect(prenotaAction({ prenota: { tipo: 'ancora', label: 'Preventivo', target: '/eventi#preventivo' } } as any))
     .toEqual({ label: 'Preventivo', href: '/eventi#preventivo' });
 });
+test('prenota whatsapp usa numero e testo della divisione', () => {
+  expect(prenotaAction({ whatsapp: '393496897941', waTesto: 'Ciao SPA', prenota: { tipo: 'whatsapp', label: 'Prenota su WhatsApp' } } as any))
+    .toEqual({ label: 'Prenota su WhatsApp', href: 'https://wa.me/393496897941?text=Ciao%20SPA' });
+});
