@@ -1,0 +1,70 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import wmWhite from '../assets/cliente/wordmark-white.png';
+import wmBlue from '../assets/cliente/wordmark-blue.png';
+import { NOME, prenotaAction, type Divisione, type DivisioneId } from '../lib/contatti';
+
+interface Props { divisione?: DivisioneId; navTheme?: 'dark' | 'light' }
+const { divisione, navTheme = 'dark' } = Astro.props;
+
+const tutte = (await getCollection('divisioni')).map(e => e.data as Divisione).sort((a, b) => a.ordine - b.ordine);
+const corrente = tutte.find(d => d.id === divisione);
+const prenota = corrente && prenotaAction(corrente);
+---
+<header class="nav" id="nav" data-nav-theme={navTheme}>
+  <a href="/" class="brand" aria-label="Pietrabianca Resort, home" translate="no">
+    <span id="navMark"></span>
+    <Image class="wm white" src={wmWhite} width={262} alt="" loading="eager" />
+    <Image class="wm blue" src={wmBlue} width={262} alt="" loading="eager" />
+  </a>
+  <nav aria-label="Principale">
+    <button class="menu-btn" aria-expanded="false" aria-controls="menu" id="menuBtn">Menu</button>
+    <ul id="menu">
+      {tutte.map(d => <li><a href={d.href}>{NOME[d.id]}</a></li>)}
+      <li>
+        {prenota
+          ? <a class="btn btn-white" href={prenota.href}>{prenota.label}</a>
+          : <button type="button" class="btn btn-white" aria-controls="prenota">Prenota</button>}
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<script>
+  const nav = document.getElementById('nav')!;
+  const mb = document.getElementById('menuBtn')!;
+  mb.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    mb.setAttribute('aria-expanded', String(open));
+    mb.textContent = open ? 'Chiudi' : 'Menu';
+  });
+</script>
+
+<style is:global>
+  :root { --s: .253; }
+  .nav { position: fixed; z-index: 50; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; padding: calc(18px + env(safe-area-inset-top)) clamp(16px, 4vw, 48px) 18px; color: #fff; transition: color .45s ease; }
+  .nav[data-nav-theme='light'] { color: var(--navy); }
+  .nav:before { content: ''; position: absolute; inset: 0 0 -40px; background: linear-gradient(180deg, rgba(11, 31, 58, .35), transparent); pointer-events: none; transition: opacity .45s; }
+  .nav[data-nav-theme='light']:before { opacity: 0; }
+  .brand { position: relative; display: block; width: calc(517px * var(--s)); height: calc(221px * var(--s)); }
+  .brand .wm { position: absolute; left: 0; bottom: 0; width: 100%; height: auto; transition: opacity .45s; }
+  .brand .wm.blue { opacity: 0; }
+  .nav[data-nav-theme='light'] .wm.white { opacity: 0; }
+  .nav[data-nav-theme='light'] .wm.blue { opacity: 1; }
+  #navMark { position: absolute; left: calc(200px * var(--s)); top: calc(20px * var(--s)); width: calc(135px * var(--s)); height: calc(108px * var(--s)); }
+  .nav ul { position: relative; display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; font-size: 13px; font-weight: 600; align-items: center; }
+  .nav ul a:not(.btn) { position: relative; }
+  .nav ul a:not(.btn):after { content: ''; position: absolute; left: 0; right: 0; bottom: -4px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .5s cubic-bezier(.7, 0, .2, 1); }
+  .nav ul a:not(.btn):hover:after, .nav ul a:not(.btn):focus-visible:after { transform: scaleX(1); transform-origin: left; }
+  .menu-btn { display: none; position: relative; background: none; border: 1px solid currentColor; color: inherit; font: 700 12px 'Manrope Variable', sans-serif; letter-spacing: .12em; text-transform: uppercase; padding: 10px 14px; border-radius: 999px; min-height: 44px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; border-radius: 999px; font-weight: 600; font-size: 14px; min-height: 48px; cursor: pointer; border: 0; font-family: inherit; }
+  .btn-white { background: #fff; color: var(--navy); }
+  .nav[data-nav-theme='light'] .btn-white { background: var(--navy); color: #fff; }
+  @media (max-width: 820px) {
+    :root { --s: .2; }
+    .nav ul { display: none; }
+    .nav.open ul { display: flex; position: fixed; inset: 0; z-index: -1; flex-direction: column; justify-content: center; gap: 26px; font-size: 30px; font-family: var(--font-display); background: var(--notte); color: #fff; }
+    .menu-btn { display: block; }
+  }
+</style>

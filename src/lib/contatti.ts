@@ -28,3 +28,9 @@ export function prenotaAction(d: Divisione): { label: string; href: string } {
   const { tipo, label, target } = d.prenota;
   return { label, href: tipo === 'ancora' ? target! : waLink(d.whatsapp, d.waTesto) };
 }
+
+export const CENTRALINO = '390818035327'; // rete fissa, niente WhatsApp
+
+export const NOME: Record<DivisioneId, string> = {
+  spa: 'SPA', eventi: 'Eventi', piscina: 'Piscina', ristorante: 'Ristorante',
+};

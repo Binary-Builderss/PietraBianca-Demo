@@ -1,0 +1,24 @@
+---
+import { CENTRALINO, telLink } from '../lib/contatti';
+const DA_INSERIRE = '[DA INSERIRE CON IL CLIENTE]';
+---
+<footer class="foot">
+  <p class="rs">Pietrabianca S.r.l.</p>
+  <address>Via Pratola Ponte 80, 80038 Pomigliano d'Arco (NA)</address>
+  <p>P.IVA {DA_INSERIRE} · REA {DA_INSERIRE} · Capitale sociale {DA_INSERIRE}</p>
+  <p>*Prezzi indicativi, da confermare</p>
+  <ul>
+    <li>Privacy (in arrivo)</li>
+    <li>Cookie (in arrivo)</li>
+    <li>Accessibilità (in arrivo)</li>
+  </ul>
+  <p><a href={telLink(CENTRALINO)}>Chiama il centralino</a></p>
+</footer>
+
+<style is:global>
+  .foot { padding: 48px clamp(16px, 4vw, 48px); background: var(--notte); color: #fff; font-size: 13px; line-height: 1.7; }
+  .foot .rs { font-weight: 700; font-size: 15px; }
+  .foot address { font-style: normal; }
+  .foot ul { display: flex; flex-wrap: wrap; gap: 6px 20px; list-style: none; margin: 12px 0; padding: 0; opacity: .7; }
+  .foot a { display: inline-block; padding: 12px 0; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+</style>

@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content';
+import { NOME, prenotaAction, type Divisione } from '../lib/contatti';
+
+const tutte = (await getCollection('divisioni')).map(e => e.data as Divisione).sort((a, b) => a.ordine - b.ordine);
+---
+<dialog id="prenota" aria-labelledby="prenota-t">
+  <form method="dialog" class="head">
+    <h2 id="prenota-t">Prenota</h2>
+    <button aria-label="Chiudi">Chiudi</button>
+  </form>
+  <ul>
+    {tutte.map(d => {
+      const a = prenotaAction(d);
+      return <li><a href={a.href}><span>{NOME[d.id]}</span><small>{a.label}</small></a></li>;
+    })}
+  </ul>
+</dialog>
+
+<script>
+  const d = document.getElementById('prenota') as HTMLDialogElement;
+  document.querySelectorAll('[aria-controls="prenota"]').forEach(b => b.addEventListener('click', () => d.showModal()));
+  d.addEventListener('click', e => { if (e.target === d) d.close(); }); // click sul velo
+</script>
+
+<style is:global>
+  dialog#prenota { width: min(420px, calc(100% - 20px)); padding: 20px; border: 0; border-radius: 20px; background: var(--pietra); color: var(--notte); box-shadow: 0 20px 60px rgba(0, 0, 0, .3); }
+  dialog#prenota::backdrop { background: rgba(11, 31, 58, .55); }
+  dialog#prenota .head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  dialog#prenota h2 { font-family: var(--font-display); font-size: 28px; line-height: 1.1; }
+  dialog#prenota .head button { background: none; border: 1px solid currentColor; border-radius: 999px; min-height: 44px; padding: 0 16px; font: 700 12px 'Manrope Variable', sans-serif; letter-spacing: .12em; text-transform: uppercase; color: inherit; cursor: pointer; }
+  dialog#prenota ul { list-style: none; margin: 0; padding: 0; }
+  dialog#prenota li + li { border-top: 1px solid var(--trav); }
+  dialog#prenota li a { display: flex; justify-content: space-between; align-items: center; min-height: 56px; font-weight: 700; }
+  dialog#prenota li small { font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--navy); }
+  @media (max-width: 820px) { dialog#prenota { margin: auto auto max(10px, env(safe-area-inset-bottom)); } }
+</style>
