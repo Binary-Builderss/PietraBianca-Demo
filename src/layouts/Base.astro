@@ -1,0 +1,27 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  divisione?: 'spa' | 'eventi' | 'piscina' | 'ristorante'; // diventa DivisioneId nel Task 2
+  navTheme?: 'dark' | 'light';
+}
+const { title, description, divisione, navTheme = 'dark' } = Astro.props;
+---
+<!doctype html>
+<html lang="it" data-divisione={divisione} data-nav-theme={navTheme}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0B1F3A" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <script is:inline>document.documentElement.classList.add('js')</script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Salta al contenuto</a>
+    <main id="main"><slot /></main>
+  </body>
+</html>

@@ -1,0 +1,43 @@
+@import "tailwindcss";
+@import "@fontsource-variable/bodoni-moda/opsz.css";
+@import "@fontsource-variable/bodoni-moda/opsz-italic.css";
+@import "@fontsource-variable/manrope";
+
+@theme {
+  --color-navy: #06366D;
+  --color-notte: #0B1F3A;
+  --color-azz: #9BC0DF;
+  --color-pietra: #F9F6F1;
+  --color-trav: #E4DCCD;
+  --color-champ: #C8A96A; /* solo Eventi/Natale, mai testo su fondo chiaro */
+  --color-whatsapp: #25D366; /* solo sul pulsante WhatsApp */
+  --font-display: 'Bodoni Moda Variable', serif; /* solo titoli >= 24px */
+  --font-sans: 'Manrope Variable', system-ui, sans-serif;
+}
+
+:root {
+  --navy: #06366D;
+  --notte: #0B1F3A;
+  --azz: #9BC0DF;
+  --pietra: #F9F6F1;
+  --trav: #E4DCCD;
+  --champ: #C8A96A;
+}
+
+html, body {
+  background: var(--pietra);
+  color: var(--notte);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.skip {
+  position: fixed; z-index: 200; top: -60px; left: 16px;
+  background: #fff; color: var(--navy); padding: 10px 14px;
+  border-radius: 8px; font-weight: 700;
+}
+.skip:focus { top: 12px; }
+
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--champ); outline-offset: 3px; border-radius: 6px;
+}

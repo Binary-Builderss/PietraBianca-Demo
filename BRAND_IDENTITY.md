@@ -263,15 +263,15 @@ Elogi: freschezza delle materie prime, pizza, dolci, staff, locale curato. Criti
 
 ### 4.3 Design System consigliato
 
-> ⚠️ I valori HEX del blu sono **stimati a vista dagli screenshot** del logo e delle cover. Vanno sostituiti con i valori esatti del file vettoriale del logo → `[DA INSERIRE CON IL CLIENTE]` (logo in SVG/AI/PDF).
+> ⚠️ Il blu `#06366D` è **misurato** sul logo del cliente (PNG). Gli altri HEX sono aggiornati di conseguenza. Il valore esatto del file vettoriale resta `[DA INSERIRE CON IL CLIENTE]` (logo in SVG/AI/PDF).
 
 **Palette: "Pietra & Acqua"**
 | Ruolo | Nome | HEX | Uso |
 |---|---|---|---|
-| Primario | **Blu Pietrabianca** | `#1E3A6E` | Logo, header, CTA primarie, footer |
-| Primario scuro | Notte | `#0F1E3A` | Testo su sfondo chiaro, sezioni hero scure |
-| Secondario | **Azzurro Piscina** | `#8EC5E0` | Icone, dettagli, highlight (la 🩵 del brand) |
-| Neutro chiaro | **Bianco Pietra** | `#F8F6F1` | Sfondo principale (bianco caldo, non ottico) |
+| Primario | **Blu Pietrabianca** | `#06366D` | Logo, header, CTA primarie, footer |
+| Primario scuro | Notte | `#0B1F3A` | Testo su sfondo chiaro, sezioni hero scure |
+| Secondario | **Azzurro Piscina** | `#9BC0DF` | Icone, dettagli, highlight (la 🩵 del brand) |
+| Neutro chiaro | **Bianco Pietra** | `#F9F6F1` | Sfondo principale (bianco caldo, non ottico) |
 | Neutro medio | Travertino | `#E4DCCD` | Card, sezioni alternate, bordi |
 | Accento Eventi | **Champagne** | `#C8A96A` | **Solo** per Eventi, Dinner Show e Natale: dettagli, filetti, badge |
 | Funzionale | WhatsApp | `#25D366` | Esclusivamente sul pulsante WhatsApp |

@@ -3,3 +3,16 @@ _assets-ig/
 
 # Foto del cliente usate dal prototipo
 prototipo/assets/
+
+# Astro / Node
+node_modules/
+dist/
+.astro/
+
+# Foto e logo del cliente: mai nel repo (npm run foto)
+src/assets/cliente/
+public/cliente/
+
+# Playwright
+test-results/
+playwright-report/
