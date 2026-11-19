@@ -5,8 +5,8 @@ import heroFoto from '../../assets/cliente/hero.jpg';
 import { waLink, type Divisione } from '../../lib/contatti';
 
 const spa = (await getCollection('divisioni')).map(e => e.data as Divisione).find(d => d.id === 'spa')!;
-// su mobile la foto è mostrata a ~720 px di larghezza reale: WebP 720 px invece del JPEG 1040 px (che resta per desktop e per la texture WebGL)
-const heroMobile = await getImage({ src: heroFoto, format: 'webp', width: 720, quality: 70 });
+// su mobile: WebP 1040 px (nitido su schermi DPR 2-3) invece del JPEG, che resta per desktop e per la texture WebGL
+const heroMobile = await getImage({ src: heroFoto, format: 'webp', width: 1040, quality: 75 });
 ---
 <section class="hero" id="hero" data-theme="dark">
   <div class="hero-media" id="heroMedia"><div class="layer" id="heroLayer">

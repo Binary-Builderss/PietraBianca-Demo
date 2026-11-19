@@ -10,6 +10,8 @@ npm run foto      # copia foto e logo del cliente da prototipo/assets (non versi
 npm run dev       # http://localhost:4321
 ```
 
+Dopo ogni pull rilancia `npm run foto`: copia solo le foto che il sito usa (l'elenco sta in `scripts/foto.sh`).
+
 Da un worktree o da un'altra cartella: `PB_FOTO_SRC=/percorso/a/prototipo/assets npm run foto`.
 
 ## Build e anteprima
