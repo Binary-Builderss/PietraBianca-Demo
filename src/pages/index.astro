@@ -34,3 +34,12 @@ import Mappa from '../components/home/Mappa.astro';
   }
   initIntro({ reduce }).then(() => initMotion({ reduce, desktop }));
 </script>
+
+<style is:global>
+  /* Barra di riserva della nav: il tema per sezione (motion.ts) vive solo col JS. Senza, la nav resta "dark"
+     (testo bianco) anche sulle sezioni chiare: fondo notte pieno. Subito senza JS; col JS solo se dopo 6 s
+     motion.ts non ha ancora messo html[data-motion] (modulo non arrivato o in errore), come la rete del loader. */
+  @keyframes pb-nav-solida { to { inset: 0; background: var(--notte); } }
+  html:not(.js) .nav::before { inset: 0; background: var(--notte); }
+  html.js:not([data-motion]) .nav::before { animation: pb-nav-solida 0s 6s forwards; }
+</style>

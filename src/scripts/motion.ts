@@ -30,8 +30,20 @@ function start(mm: gsap.MatchMedia, reduce: boolean, desktop: boolean) {
   // y di scroll che porta in vista un pannello del binario orizzontale (null = non siamo in modalità pin)
   let pinY: (el: Element) => number | null = () => null;
 
+  // tema della nav (e dei sassi del marchio, via CSS): vince la sezione che sta davvero sotto la nav.
+  // Le posizioni a schermo includono già pin e smoother (un ScrollTrigger sulla sezione pinnata finirebbe prima del pin).
+  const nav = document.getElementById('nav')!;
+  const sezioni = [...document.querySelectorAll<HTMLElement>('[data-theme]')];
+  const tema = () => {
+    const s = sezioni.find(x => { const r = x.getBoundingClientRect(); return r.top <= 50 && r.bottom > 50; });
+    if (s) nav.dataset.navTheme = s.dataset.theme;
+  };
+  ScrollTrigger.create({ start: 0, end: 'max', onUpdate: tema, onRefresh: tema });
+  tema();
+  document.documentElement.dataset.motion = ''; // il tema è vivo: spegne la barra di riserva della nav (index.astro)
+
   if (!reduce) {
-    // prima di ogni altro ScrollTrigger; nav, tabbar e cairn sono fuori da #smooth-wrapper.
+    // prima dei ScrollTrigger che misurano posizioni (il tema sopra legge solo i rect); nav, tabbar e cairn sono fuori da #smooth-wrapper.
     // Fuori dalla matchMedia: in GSAP 3.13 uno smoother ucciso lascia il body alto quanto la pagina desktop.
     // un desktop rimpicciolito sotto gli 821 px tiene lo scroll morbido, va bene
     if (desktop) {
@@ -81,17 +93,6 @@ function start(mm: gsap.MatchMedia, reduce: boolean, desktop: boolean) {
         gsap.from(el, { y: 24, opacity: 0, duration: .9, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 85%' } }));
     });
   }
-
-  // tema della nav (e dei sassi del marchio, via CSS): vince la sezione che sta davvero sotto la nav.
-  // Le posizioni a schermo includono già pin e smoother (un ScrollTrigger sulla sezione pinnata finirebbe prima del pin).
-  const nav = document.getElementById('nav')!;
-  const sezioni = [...document.querySelectorAll<HTMLElement>('[data-theme]')];
-  const tema = () => {
-    const s = sezioni.find(x => { const r = x.getBoundingClientRect(); return r.top <= 50 && r.bottom > 50; });
-    if (s) nav.dataset.navTheme = s.dataset.theme;
-  };
-  ScrollTrigger.create({ start: 0, end: 'max', onUpdate: tema, onRefresh: tema });
-  tema();
 
   // ancore (/#ristorante) e tastiera: col pin il pannello sta di lato, lo scroll nativo non lo porta in vista
   const goTo = (el: Element | null, smooth: boolean) => {
