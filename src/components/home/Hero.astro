@@ -16,7 +16,7 @@ const heroMobile = await getImage({ src: heroFoto, format: 'webp', width: 1040, 
     </picture>
   </div></div>
   <div class="hero-txt">
-    <p class="kicker" id="kicker">Pomigliano d’Arco · a 20 minuti da Napoli</p>
+    <p class="kicker" id="kicker"><span>Pomigliano d’Arco</span><span class="sep"> · </span><span>a 20 minuti da Napoli</span></p>
     <h1 class="font-display" id="title"><span class="l1">Tre anime,</span> <span class="l2">una sola destinazione.</span></h1>
     <div class="ctas" id="ctas">
       <a href={spa.href} class="btn btn-white" id="primaryCta">Scopri la SPA</a>
@@ -40,7 +40,8 @@ const heroMobile = await getImage({ src: heroFoto, format: 'webp', width: 1040, 
   .hero h1 .l2 { display: block; font-size: clamp(28px, 4.2vw, 67px); font-style: italic; font-weight: 400; letter-spacing: -.01em; margin-top: .1em; }
   .hero h1 .line-mask { padding: .08em 0 .16em; margin: -.08em 0 -.16em; }
   .ctas { display: flex; gap: 22px; flex-wrap: wrap; align-items: center; }
-  .txtlink { font-weight: 600; font-size: 14px; border-bottom: 1px solid rgba(255, 255, 255, .6); padding: 12px 0 2px; }
+  .txtlink { font-weight: 600; font-size: 14px; border-bottom: 1px solid rgba(255, 255, 255, .6); padding: 12px 0 2px; transition: border-color .3s; }
+  @media (hover: hover) { .txtlink:hover { border-bottom-color: #fff; } }
   @media (min-width: 821px) {
     .hero-media { inset: var(--top) var(--g) var(--g) auto; width: var(--ww); border-radius: 6px; }
     /* tenere allineato con origin [.5, .72] passato a initWater */
@@ -51,5 +52,8 @@ const heroMobile = await getImage({ src: heroFoto, format: 'webp', width: 1040, 
   }
   @media (max-width: 820px) {
     .hero-txt { bottom: calc(96px + env(safe-area-inset-bottom)); }
+    .kicker { line-height: 1.7; }
+    .kicker span { display: block; }
+    .kicker .sep { display: none; }
   }
 </style>

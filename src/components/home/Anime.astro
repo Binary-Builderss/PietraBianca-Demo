@@ -38,17 +38,21 @@ const ALTEZZE = [74, 56, 66, 60]; // vh delle foto nel binario orizzontale (desk
 <style is:global>
   /* default verticale; orizzontale con pin solo con JS su desktop (motion.ts aggiunge .is-h) */
   .anime { position: relative; background: var(--notte); color: #fff; overflow: hidden; overflow: clip; } /* clip: il focus da tastiera non può scrollarla di lato */
-  .anime-head { display: flex; justify-content: space-between; align-items: end; padding: 90px clamp(16px, 4vw, 48px) 0; }
-  .anime-head h2 { font-size: clamp(32px, 3.6vw, 56px); line-height: 1; font-weight: 500; }
-  .anime-head h2 em { font-style: italic; font-weight: 400; color: var(--azz); }
-  .pips { display: flex; gap: 10px; align-items: center; }
+  .anime-head { display: flex; justify-content: space-between; align-items: end; padding: var(--sec-y) var(--gut) 0; }
+  .anime-head h2 em { color: var(--azz); }
+  .pips { display: flex; gap: 6px; align-items: center; }
   .anime:not(.is-h) .pips { display: none; } /* servono solo col binario orizzontale */
-  .pips i { display: block; width: 34px; height: 8px; border-radius: 50%; background: rgba(155, 192, 223, .25); transition: background-color .4s, transform .4s; }
-  .pips i.on { background: var(--azz); transform: scaleX(1.25); }
-  .track { display: flex; flex-direction: column; gap: 72px; padding: 48px clamp(16px, 4vw, 48px) 90px; }
+  .pips i { display: block; width: 40px; height: 2px; border-radius: 1px; background: rgba(155, 192, 223, .25); transition: background-color .4s; }
+  .pips i.on { background: var(--azz); }
+  .track { display: flex; flex-direction: column; gap: 72px; padding: 48px var(--gut) var(--sec-y); }
   .panel { display: flex; flex-direction: column; gap: 18px; }
   .pic { position: relative; overflow: hidden; border-radius: 6px; aspect-ratio: 4/5; }
-  .pic img { position: absolute; top: 0; left: -4%; width: 108%; height: 100%; object-fit: cover; }
+  .pic img { position: absolute; top: 0; left: -4%; width: 108%; max-width: none; height: 100%; object-fit: cover; }
+  /* `scale` e non `transform`: il parallax GSAP sull'img usa transform */
+  .pic img, .pd-pic img { transition: scale 1.2s cubic-bezier(.2, .7, .2, 1); }
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .panel:hover .pic img, .pd-card:hover .pd-pic img { scale: 1.04; }
+  }
   .panel .tag { margin: 0; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; font-weight: 700; color: var(--azz); }
   .panel h3 { font-size: clamp(30px, 3vw, 48px); line-height: 1.08; letter-spacing: -.01em; margin: 10px 0 12px; max-width: 14ch; font-weight: 500; }
   .panel h3 em { font-style: italic; font-weight: 400; }

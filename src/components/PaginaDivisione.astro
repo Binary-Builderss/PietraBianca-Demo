@@ -2,10 +2,11 @@
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { getCollection } from 'astro:content';
-import type { Divisione, DivisioneId } from '../lib/contatti';
+import { prenotaAction, type Divisione, type DivisioneId } from '../lib/contatti';
 
-interface Props { id: DivisioneId; titolo: string; intro: string; foto: string; fotoAlt: string; focus?: string }
-const { id, titolo, intro, foto, fotoAlt, focus = '50% 50%' } = Astro.props;
+// titolo e titoloEm: le due righe dell'h1, maiuscolo + corsivo come la hero della home
+interface Props { id: DivisioneId; titolo: string; titoloEm: string; intro: string; foto: string; fotoAlt: string; focus?: string }
+const { id, titolo, titoloEm, intro, foto, fotoAlt, focus = '50% 50%' } = Astro.props;
 
 // foto fuori da git: il nome viene dalla pagina, il file sta in src/assets/cliente/
 const files = import.meta.glob<{ default: ImageMetadata }>('/src/assets/cliente/*', { eager: true });
@@ -18,13 +19,18 @@ const ALTRA: Partial<Record<DivisioneId, DivisioneId>> = { spa: 'ristorante', ev
 const tutte = (await getCollection('divisioni')).map(e => e.data as Divisione);
 const mia = tutte.find(d => d.id === id)!;
 const altra = tutte.find(d => d.id === ALTRA[id])!;
+const azione = prenotaAction(mia);
 ---
 <section class="pd-hero" data-theme="dark">
-  <Image src={img(foto)} alt={fotoAlt} widths={[800, 1200, 1800]} sizes="100vw" loading="eager" fetchpriority="high" style={`object-position:${focus}`} />
+  <Image src={img(foto)} alt={fotoAlt} widths={[800, 1200, 1800]} sizes="(min-width: 821px) 40vw, 100vw" loading="eager" fetchpriority="high" style={`object-position:${focus}`} />
   <div class="pd-txt">
     <p class="eyebrow">{mia.tag}</p>
-    <h1 class="font-display">{titolo}</h1>
+    <h1 class="font-display"><span class="l1">{titolo}</span> <span class="l2">{titoloEm}</span></h1>
     <p class="pd-intro">{intro}</p>
+    <div class="pd-cta">
+      <span>{mia.prezzo}</span>
+      <a class:list={['btn', azione.href.startsWith('https://wa.me/') ? 'btn-wa' : 'btn-white']} href={azione.href}>{azione.label}</a>
+    </div>
   </div>
 </section>
 
@@ -35,7 +41,6 @@ const altra = tutte.find(d => d.id === ALTRA[id])!;
   <a class="pd-card" href={altra.href} data-reveal>
     <div class="pd-pic"><Image src={img(altra.foto)} alt={altra.fotoAlt} widths={[480, 800]} sizes="(min-width: 821px) 40vw, 100vw" /></div>
     <div>
-      <p class="eyebrow">{altra.tag}</p>
       <p class="pd-card-t font-display">{altra.titolo} <em>{altra.titoloEm}</em></p>
       <p>{altra.testo}</p>
       <span class="pd-card-p">{altra.prezzo}</span>
@@ -44,26 +49,30 @@ const altra = tutte.find(d => d.id === ALTRA[id])!;
 </section>
 
 <style is:global>
-  .eyebrow { margin: 0; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; font-weight: 700; }
-  .btn-wa { background: #25D366; color: #053; }
-  .btn-navy { background: var(--navy); color: #fff; }
-
-  .pd-hero { position: relative; display: flex; align-items: flex-end; min-height: min(78svh, 720px); padding: 140px clamp(16px, 4vw, 48px) clamp(40px, 8vh, 80px); background: var(--notte); color: #fff; overflow: hidden; }
+  /* come la hero della home: mobile a tutto schermo con velo; desktop = finestra verticale nel campo notte */
+  .pd-hero { position: relative; display: flex; align-items: flex-end; min-height: min(78svh, 720px); padding: 140px var(--gut) clamp(40px, 8vh, 80px); background: var(--notte); color: #fff; overflow: hidden; --g: var(--gut); --ww: min(calc((min(100svh, 860px) - 96px - var(--g)) * .75), 40vw); }
   .pd-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .pd-hero:after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11, 31, 58, .35), rgba(11, 31, 58, .15) 35%, rgba(11, 31, 58, .88)); }
-  .pd-txt { position: relative; z-index: 1; max-width: 640px; }
-  .pd-hero h1 { margin: 14px 0 16px; font-size: clamp(44px, 7vw, 96px); line-height: 1; font-weight: 500; }
-  .pd-intro { margin: 0; max-width: 44ch; font-size: 17px; line-height: 1.6; opacity: .92; }
+  .pd-txt { position: relative; z-index: 1; }
+  .pd-hero h1 { margin: 16px 0 24px; line-height: 1; font-weight: 500; }
+  .pd-hero h1 .l1 { display: block; font-size: clamp(40px, 5.6vw, 88px); letter-spacing: .02em; text-transform: uppercase; }
+  .pd-hero h1 .l2 { display: block; margin-top: .1em; padding-bottom: .08em; font-size: clamp(28px, 3.6vw, 56px); font-style: italic; font-weight: 400; letter-spacing: -.01em; }
+  .pd-intro { margin: 0; max-width: 40ch; font-size: 17px; line-height: 1.6; opacity: .92; }
+  .pd-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: 24px; font-size: 15px; font-weight: 700; }
+  @media (max-width: 820px) { .pd-cta .btn { display: none; } } /* su mobile l'azione è già nella tabbar */
+  @media (min-width: 821px) {
+    .pd-hero { min-height: min(100svh, 860px); padding: 96px calc(var(--ww) + var(--g) + clamp(24px, 4vw, 64px)) var(--g) var(--g); }
+    .pd-hero img { inset: 96px var(--g) var(--g) auto; width: var(--ww); height: calc(100% - 96px - var(--g)); border-radius: 6px; }
+    .pd-hero:after { display: none; }
+  }
 
-  .pd-next { padding: clamp(72px, 12vh, 120px) clamp(16px, 4vw, 48px); color: var(--notte); }
-  .pd-next h2 { margin: 0 0 32px; font-size: clamp(32px, 3.6vw, 56px); line-height: 1.05; font-weight: 500; }
+  .pd-next { padding: var(--sec-y) var(--gut); color: var(--notte); }
   .pd-card { display: grid; gap: 24px; align-items: center; }
   .pd-pic { aspect-ratio: 4/3; overflow: hidden; border-radius: 6px; }
   .pd-pic img { width: 100%; height: 100%; object-fit: cover; }
-  .pd-card .eyebrow { color: var(--navy); }
-  .pd-card-t { margin: 8px 0 12px; font-size: clamp(26px, 2.6vw, 38px); line-height: 1.1; font-weight: 500; }
+  .pd-card-t { margin: 0 0 12px; font-size: clamp(26px, 2.6vw, 38px); line-height: 1.1; font-weight: 500; }
   .pd-card-t em { font-style: italic; font-weight: 400; }
-  .pd-card p:not(.eyebrow):not(.pd-card-t) { margin: 0; max-width: 40ch; font-size: 15px; line-height: 1.6; }
+  .pd-card p:not(.pd-card-t) { margin: 0; max-width: 40ch; font-size: 15px; line-height: 1.6; }
   .pd-card-p { display: block; margin-top: 14px; font-size: 13px; font-weight: 700; color: var(--navy); }
   .pd-card:hover .pd-card-t em, .pd-card:focus-visible .pd-card-t em { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
   @media (min-width: 821px) { .pd-card { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(32px, 6vw, 96px); max-width: 1100px; } }

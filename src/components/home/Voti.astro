@@ -6,7 +6,6 @@ const voti = [
 ];
 ---
 <section class="voti" id="voti" data-theme="light" aria-labelledby="votiTitle">
-  <p class="eyebrow">Recensioni</p>
   <h2 class="font-display" id="votiTitle">Cosa dicono <em>di noi.</em></h2>
   <ul>
     {voti.map(v => (
@@ -23,13 +22,13 @@ const voti = [
 </section>
 
 <style is:global>
-  .voti { padding: clamp(72px, 14vh, 140px) clamp(16px, 4vw, 48px); background: var(--trav); color: var(--notte); }
-  .voti ul { display: grid; gap: 16px; margin: 32px 0 0; padding: 0; list-style: none; }
-  .voti li { display: flex; flex-direction: column; gap: 6px; padding: 28px; border-radius: 12px; background: var(--pietra); font-size: 14px; }
+  .voti { padding: var(--sec-y) var(--gut); background: var(--pietra); color: var(--notte); border-top: 1px solid rgba(6, 54, 109, .12); }
+  .voti ul { display: grid; gap: 32px clamp(32px, 6vw, 96px); margin: 40px 0 0; padding: 0; list-style: none; }
+  .voti li { display: flex; flex-direction: column; gap: 6px; padding: 24px 0 0; border-top: 1px solid rgba(6, 54, 109, .35); font-size: 14px; }
   .voti .fonte { font-weight: 700; letter-spacing: .12em; text-transform: uppercase; font-size: 12px; }
   .voti strong { font-size: clamp(40px, 5vw, 64px); line-height: 1.1; font-weight: 500; color: var(--navy); }
   .voti strong.manca { font-size: 16px; font-weight: 600; line-height: 1.4; padding: 18px 0 10px; }
   .voti strong small { font-family: var(--font-sans); font-size: 16px; font-weight: 600; }
   .voti .in-arrivo { padding: 12px 0; font-weight: 600; color: #4a5a70; }
-  @media (min-width: 821px) { .voti ul { grid-template-columns: 1fr 1fr; max-width: 900px; } }
+  @media (min-width: 821px) { .voti ul { grid-template-columns: 1fr 1fr; } }
 </style>

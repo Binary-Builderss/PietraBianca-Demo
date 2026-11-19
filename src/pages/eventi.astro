@@ -10,11 +10,10 @@ const tipologie = ['Feste a tema', 'Pacchetti 18 anni', 'Comunioni e battesimi',
 const tipiEvento = ['Diciottesimo', 'Festa a tema', 'Comunione/Battesimo', 'Dinner Show', 'Cena aziendale', 'Altro'];
 ---
 <Base title="Eventi · Pietrabianca Resort" description="Feste a tema, diciottesimi, comunioni e battesimi, Dinner Show: chiedi un preventivo." divisione="eventi">
-  <PaginaDivisione id="eventi" titolo="Tu immagina la festa." intro="Noi le diamo il ritmo: dal pacchetto base con DJ alle formule su misura, con show e ospiti." foto="v3-event-pink-mise-en-place.jpg" fotoAlt={eventi.fotoAlt} focus="50% 40%">
+  <PaginaDivisione id="eventi" titolo="Tu immagina" titoloEm="la festa." intro="Noi le diamo il ritmo: dal pacchetto base con DJ alle formule su misura, con show e ospiti." foto="v3-event-pink-mise-en-place.jpg" fotoAlt={eventi.fotoAlt} focus="50% 40%">
 
     <section class="ev-sez" data-theme="light" aria-labelledby="festeT">
       <div data-reveal>
-        <p class="eyebrow">Feste</p>
         <h2 class="font-display" id="festeT">Il tuo giorno, <em>a modo tuo.</em></h2>
         <p class="ev-prezzo">{eventi.prezzo}</p>
         <p class="ev-nota">*Prezzi indicativi, da confermare</p>
@@ -38,7 +37,6 @@ const tipiEvento = ['Diciottesimo', 'Festa a tema', 'Comunione/Battesimo', 'Dinn
 
     <section class="ev-sez ev-trav" data-theme="light" aria-labelledby="preventivoT">
       <div data-reveal>
-        <p class="eyebrow">Preventivo</p>
         <h2 class="font-display" id="preventivoT">Raccontaci <em>la tua festa.</em></h2>
         <p class="ev-nota">Compila il modulo: ti ricontatta lo staff eventi.</p>
       </div>
@@ -98,11 +96,10 @@ const tipiEvento = ['Diciottesimo', 'Festa a tema', 'Comunione/Battesimo', 'Dinn
 </script>
 
 <style is:global>
-  .ev-sez { display: grid; gap: 40px; padding: clamp(64px, 11vh, 112px) clamp(16px, 4vw, 48px); color: var(--notte); }
+  .ev-sez { display: grid; gap: 40px; padding: var(--sec-y) var(--gut); color: var(--notte); }
   .ev-trav { background: var(--trav); }
   .ev-notte { background: var(--notte); color: #fff; }
-  .ev-sez h2 { margin: 8px 0 20px; font-size: clamp(32px, 3.6vw, 56px); line-height: 1.05; font-weight: 500; max-width: 18ch; }
-  .ev-sez h2 em { font-style: italic; font-weight: 400; }
+  .ev-sez h2 { max-width: 18ch; }
   .ev-sez .eyebrow { color: var(--navy); }
   .ev-notte .eyebrow, .ev-notte h2 em { color: var(--champ); } /* champ solo su fondo scuro */
   .ev-prezzo { margin: 0 0 6px; font-size: 18px; font-weight: 700; }
@@ -112,6 +109,11 @@ const tipiEvento = ['Diciottesimo', 'Festa a tema', 'Comunione/Battesimo', 'Dinn
   .ev-form { display: grid; gap: 18px; max-width: 520px; scroll-margin-top: 120px; }
   .ev-form label { display: grid; gap: 6px; font-size: 13px; font-weight: 700; letter-spacing: .04em; }
   .ev-form select, .ev-form input:not([type='checkbox']) { width: 100%; min-height: 48px; padding: 10px 14px; border: 1px solid var(--navy); border-radius: 6px; background: var(--pietra); color: var(--notte); font: inherit; font-size: 16px; font-weight: 400; letter-spacing: 0; }
+  /* freccia disegnata: la select nativa di Chrome/Safari non somiglia agli altri campi */
+  .ev-form select { appearance: none; padding-right: 44px;
+    background: linear-gradient(45deg, transparent 50%, var(--navy) 50%) right 22px center / 6px 6px no-repeat,
+                linear-gradient(-45deg, transparent 50%, var(--navy) 50%) right 16px center / 6px 6px no-repeat, var(--pietra); }
+  .ev-form :is(select, input):focus-visible { border-color: var(--notte); box-shadow: inset 0 0 0 1px var(--notte); }
   .ev-form .ev-privacy { grid-template-columns: auto 1fr; align-items: start; gap: 12px; font-size: 14px; font-weight: 400; letter-spacing: 0; line-height: 1.5; }
   .ev-privacy input { width: 22px; height: 22px; margin: 0; accent-color: var(--navy); }
   .ev-form .btn { justify-self: start; }

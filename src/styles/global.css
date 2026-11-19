@@ -22,6 +22,9 @@
   --pietra: #F9F6F1;
   --trav: #E4DCCD;
   --champ: #C8A96A;
+  --sec-y: clamp(80px, 9vw, 144px); /* ritmo verticale unico tra le sezioni */
+  --gut: clamp(16px, 4vw, 48px);
+  --h2: clamp(32px, 3.6vw, 56px);
 }
 
 html, body {
@@ -30,6 +33,29 @@ html, body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
+
+/* titoli di sezione: un solo stile per tutto il sito */
+:is(.camere, .natale, .voti, .mappa, .spa-sez, .ev-sez, .pi-sez, .pd-next) h2, .anime-head h2 {
+  margin: 14px 0 20px; font-size: var(--h2); line-height: 1.06; letter-spacing: -.012em; font-weight: 500; text-wrap: balance;
+}
+:is(.camere, .natale, .voti, .mappa, .spa-sez, .ev-sez, .pi-sez, .pd-next, .anime-head) h2 em { font-style: italic; font-weight: 400; letter-spacing: -.005em; }
+.eyebrow { margin: 0; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; font-weight: 700; line-height: 1.5; }
+
+/* pulsanti a pillola */
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; border-radius: 999px; font-weight: 600; font-size: 14px; min-height: 48px; cursor: pointer; border: 0; font-family: inherit;
+  transition: background-color .35s cubic-bezier(.2, .7, .2, 1), color .35s cubic-bezier(.2, .7, .2, 1), transform .2s ease-out, filter .35s; -webkit-tap-highlight-color: transparent; }
+.btn:active { transform: scale(.98); }
+.btn-white { background: #fff; color: var(--navy); }
+.btn-navy { background: var(--navy); color: #fff; }
+.btn-wa { background: #25D366; color: #053; }
+.btn-champ { background: var(--champ); color: var(--notte); }
+@media (hover: hover) {
+  .btn-white:hover { background: var(--azz); color: var(--notte); } /* 8,7:1 */
+  .btn-navy:hover, .nav[data-nav-theme='light'] .btn-white:hover { background: var(--notte); color: #fff; } /* 16,5:1 */
+  .btn-champ:hover { background: #D6BB84; } /* testo notte 8,9:1 */
+  .btn-wa:hover { filter: brightness(1.06); } /* schiarire, mai scurire: #053 su verde è già al limite (4,51:1) */
+}
+@media (prefers-reduced-motion: reduce) { .btn { transition: none; } .btn:active { transform: none; } }
 
 .skip {
   position: fixed; z-index: 200; top: -60px; left: 16px;

@@ -12,7 +12,8 @@ test('/spa: prezzi con asterisco, listino massaggi da inserire, CTA verso WhatsA
   await page.goto('/spa');
   await expect(page.getByText('€35 di listino, in promo da €15 (kit escluso)*')).toBeVisible();
   await expect(page.getByText('[DA INSERIRE CON IL CLIENTE]').first()).toBeVisible();
-  const cta = page.locator('main a[href^="https://wa.me/"]');
+  // la CTA dell'hero (.pd-cta) ripete apposta il messaggio di «Prenota il percorso»
+  const cta = page.locator('main a[href^="https://wa.me/"]:not(.pd-cta a)');
   expect(await cta.evaluateAll(as => as.map(a => a.getAttribute('href')!.split('?')[0]))).toEqual(Array(await cta.count()).fill('https://wa.me/393496897941'));
   const testi = await cta.evaluateAll(as => as.map(a => new URL(a.getAttribute('href')!).searchParams.get('text')));
   expect(new Set(testi).size).toBe(testi.length); // ogni CTA ha il suo testo
@@ -65,14 +66,14 @@ test.describe('/eventi senza JS', () => {
 
 test('/piscina: prezzi, regola cibo, FAQ apribili, Info su WhatsApp', async ({ page }) => {
   await page.goto('/piscina');
-  await expect(page.getByText(/€13/)).toBeVisible();
-  await expect(page.getByText(/€18/)).toBeVisible();
+  await expect(page.locator('.pi-prezzi').getByText(/€13/)).toBeVisible(); // "Ingresso da €13*" è anche nell'hero
+  await expect(page.locator('.pi-prezzi').getByText(/€18/)).toBeVisible();
   await expect(page.getByText(/cibo dall.esterno/i)).toBeVisible();
   const faq = page.locator('details');
   expect(await faq.count()).toBeGreaterThanOrEqual(5);
   await faq.first().locator('summary').click();
   await expect(faq.first()).toHaveAttribute('open', '');
-  await expect(page.locator('main a[href^="https://wa.me/393496897941?text="]').first()).toBeVisible();
+  await expect(page.locator('.pi-sez a[href^="https://wa.me/393496897941?text="]').first()).toBeVisible(); // quello dell'hero è nascosto su mobile
 });
 test('/piscina desktop: con tutte le FAQ aperte il fondo pagina resta raggiungibile', async ({ page }, info) => {
   test.skip(info.project.name !== 'desktop', 'ScrollSmoother solo con puntatore fine');

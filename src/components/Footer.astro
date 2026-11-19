@@ -1,24 +1,56 @@
 ---
-import { CENTRALINO, telLink } from '../lib/contatti';
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import wmWhite from '../assets/cliente/wordmark-white.png';
+import { CENTRALINO, NOME, telLink, type Divisione } from '../lib/contatti';
 const DA_INSERIRE = '[DA INSERIRE CON IL CLIENTE]';
+const tutte = (await getCollection('divisioni')).map(e => e.data as Divisione).sort((a, b) => a.ordine - b.ordine);
+const spa = tutte.find(d => d.id === 'spa')!;
+const ristorante = tutte.find(d => d.id === 'ristorante')!;
+// numeri ✅ in BRAND_IDENTITY §2, scritti come si leggono
+const numeri = [
+  { chi: 'Resort ed eventi', tel: CENTRALINO, testo: '081 803 5327' },
+  { chi: 'SPA', tel: spa.tel, testo: '349 689 7941' },
+  { chi: 'Don Peppino', tel: ristorante.tel, testo: '393 856 4501' },
+];
 ---
 <footer class="foot" data-theme="dark">
-  <p class="rs">Pietrabianca S.r.l.</p>
-  <address>Via Pratola Ponte 80, 80038 Pomigliano d'Arco (NA)</address>
-  <p>P.IVA {DA_INSERIRE} · REA {DA_INSERIRE} · Capitale sociale {DA_INSERIRE}</p>
-  <p>*Prezzi indicativi, da confermare</p>
-  <ul>
-    <li>Privacy (in arrivo)</li>
-    <li>Cookie (in arrivo)</li>
-    <li>Accessibilità (in arrivo)</li>
-  </ul>
-  <p><a href={telLink(CENTRALINO)}>Chiama il centralino</a></p>
+  <div>
+    <Image class="foot-wm" src={wmWhite} width={140} densities={[1, 2]} alt="Pietrabianca Resort" />
+    <address>Via Pratola Ponte 80<br />80038 Pomigliano d'Arco (NA)</address>
+  </div>
+  <nav aria-label="Pagine del resort">
+    <h2>Il resort</h2>
+    <ul>{tutte.map(d => <li><a href={d.href}>{NOME[d.id]}</a></li>)}</ul>
+  </nav>
+  <div>
+    <h2>Chiamaci</h2>
+    <ul>{numeri.map(n => <li>{n.chi} <a href={telLink(n.tel)}>{n.testo}</a></li>)}</ul>
+  </div>
+  <div>
+    <h2>Instagram</h2>
+    <ul><li><a href="https://www.instagram.com/pietrabianca.resort/" target="_blank" rel="noopener">@pietrabianca.resort</a></li></ul>
+  </div>
+  <div class="legal">
+    <p><strong>Pietrabianca S.r.l.</strong> · P.IVA {DA_INSERIRE} · REA {DA_INSERIRE} · Capitale sociale {DA_INSERIRE}</p>
+    <p>*Prezzi indicativi, da confermare</p>
+    <ul>
+      <li>Privacy (in arrivo)</li>
+      <li>Cookie (in arrivo)</li>
+      <li>Accessibilità (in arrivo)</li>
+    </ul>
+  </div>
 </footer>
 
 <style is:global>
-  .foot { padding: 48px clamp(16px, 4vw, 48px); background: var(--notte); color: #fff; font-size: 13px; line-height: 1.7; }
-  .foot .rs { font-weight: 700; font-size: 15px; }
+  .foot { display: grid; gap: 40px 32px; padding: 56px var(--gut) 32px; border-top: 1px solid rgba(155, 192, 223, .2); background: var(--notte); color: #fff; font-size: 14px; line-height: 1.7; }
+  .foot h2 { margin: 0 0 12px; font: 700 12px var(--font-sans); letter-spacing: .16em; text-transform: uppercase; color: var(--azz); }
+  .foot-wm { display: block; width: 140px; height: auto; margin-bottom: 16px; }
   .foot address { font-style: normal; }
-  .foot ul { display: flex; flex-wrap: wrap; gap: 6px 20px; list-style: none; margin: 12px 0; padding: 0; opacity: .7; }
-  .foot a { display: inline-block; padding: 12px 0; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+  .foot ul { list-style: none; margin: 0; padding: 0; }
+  .foot a { display: inline-block; padding: 10px 0; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+  .foot .legal { grid-column: 1 / -1; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, .12); font-size: 12px; opacity: .7; }
+  .foot .legal p { margin: 0 0 6px; }
+  .foot .legal ul { display: flex; flex-wrap: wrap; gap: 6px 20px; }
+  @media (min-width: 821px) { .foot { grid-template-columns: 2fr 1fr 1fr 1fr; } }
 </style>

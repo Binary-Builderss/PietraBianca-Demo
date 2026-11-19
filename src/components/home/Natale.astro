@@ -27,15 +27,13 @@ const spa = (await getCollection('divisioni')).map(e => e.data as Divisione).fin
 </section>
 
 <style is:global>
-  .natale { display: grid; gap: 40px; padding: clamp(72px, 14vh, 140px) clamp(16px, 4vw, 48px); background: var(--notte); color: #fff; }
+  .natale { display: grid; gap: 40px; padding: var(--sec-y) var(--gut); background: var(--notte); color: #fff; }
   .natale .eyebrow, .natale h2 em { color: var(--champ); }
   .natale .pic { aspect-ratio: 4/5; }
   .natale .offerte { display: grid; gap: 32px; margin-top: 32px; }
   .natale article { padding-top: 24px; border-top: 1px solid rgba(200, 169, 106, .5); }
   .natale h3 { margin: 0 0 10px; font-size: 26px; line-height: 1.15; font-weight: 500; }
   .natale article p { max-width: 38ch; margin: 0 0 20px; font-size: 15px; line-height: 1.6; opacity: .85; }
-  .btn-wa { background: #25D366; color: #053; }
-  .btn-champ { background: var(--champ); color: var(--notte); }
   @media (min-width: 821px) {
     .natale { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: center; gap: clamp(32px, 6vw, 96px); }
     .natale .offerte { grid-template-columns: 1fr 1fr; }

@@ -38,6 +38,7 @@ function start(mm: gsap.MatchMedia, reduce: boolean, desktop: boolean) {
   const tema = () => {
     const s = sezioni.find(x => { const r = x.getBoundingClientRect(); return r.top <= 50 && r.bottom > 50; });
     if (s) nav.dataset.navTheme = s.dataset.theme;
+    nav.classList.toggle('solid', !!s && !s.matches('.hero, .pd-hero'));
   };
   ScrollTrigger.create({ start: 0, end: 'max', onUpdate: tema, onRefresh: tema });
   tema();

@@ -51,6 +51,10 @@ const prenota = corrente && prenotaAction(corrente);
   .nav[data-nav-theme='light'] { color: var(--navy); }
   .nav:before { content: ''; position: absolute; inset: 0 0 -40px; background: linear-gradient(180deg, rgba(11, 31, 58, .35), transparent); pointer-events: none; transition: opacity .45s; }
   .nav[data-nav-theme='light']:before { opacity: 0; }
+  /* fuori dall'hero (motion.ts aggiunge .solid): barra piena, niente testo che passa sotto marchio e menu.
+     Altezza invariata: i sassi del cairn sono agganciati a #navMark una volta sola (intro.ts) */
+  .nav.solid:before { inset: 0; opacity: 1; background: rgba(11, 31, 58, .94); transition: background-color .45s, opacity .45s; }
+  .nav.solid[data-nav-theme='light']:before { background: rgba(249, 246, 241, .94); box-shadow: 0 1px 0 rgba(6, 54, 109, .08); }
   .brand { position: relative; display: block; width: calc(517px * var(--s)); height: calc(221px * var(--s)); }
   .brand .wm { position: absolute; left: 0; bottom: 0; width: 100%; height: auto; transition: opacity .45s; }
   .brand .wm.blue { opacity: 0; }
@@ -65,8 +69,6 @@ const prenota = corrente && prenotaAction(corrente);
   .nav ul a:not(.btn):after { content: ''; position: absolute; left: 0; right: 0; bottom: -4px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .5s cubic-bezier(.7, 0, .2, 1); }
   .nav ul a:not(.btn):hover:after, .nav ul a:not(.btn):focus-visible:after { transform: scaleX(1); transform-origin: left; }
   .menu-btn { display: none; position: relative; background: none; border: 1px solid currentColor; color: inherit; font: 700 12px 'Manrope Variable', sans-serif; letter-spacing: .12em; text-transform: uppercase; padding: 10px 14px; border-radius: 999px; min-height: 44px; }
-  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; border-radius: 999px; font-weight: 600; font-size: 14px; min-height: 48px; cursor: pointer; border: 0; font-family: inherit; }
-  .btn-white { background: #fff; color: var(--navy); }
   .nav[data-nav-theme='light'] .btn-white { background: var(--navy); color: #fff; }
   @media (max-width: 820px) {
     :root { --s: .2; }
@@ -79,6 +81,7 @@ const prenota = corrente && prenotaAction(corrente);
     html.js .nav.open ul { display: flex; position: fixed; inset: 0; z-index: -1; flex-direction: column; justify-content: center; gap: 26px; font-size: 30px; font-family: var(--font-display); background: var(--notte); color: #fff; }
     /* menu aperto = fondo notte: testo e marchio bianchi anche col tema light */
     .nav.open { color: #fff; }
+    .nav.open[data-nav-theme]:before { background: var(--notte); box-shadow: none; }
     .nav.open .wm.white { opacity: 1; }
     .nav.open .wm.blue { opacity: 0; }
     .nav.open .btn-white { background: #fff; color: var(--navy); }

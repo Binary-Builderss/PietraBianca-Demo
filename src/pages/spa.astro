@@ -18,7 +18,7 @@ const tecnologie = [
 ];
 ---
 <Base title="SPA · Pietrabianca Resort" description="Pietrabianca Space: percorso SPA, massaggi e tecnologie di estetica avanzata." divisione="spa">
-  <PaginaDivisione id="spa" titolo="Nessuna fretta." intro="Lascia fuori ansia e frenesia: qui ci sono acqua calda, luci soffuse e silenzi che rigenerano." foto="v3-spa-hydromassage.jpg" fotoAlt={spa.fotoAlt} focus="50% 80%">
+  <PaginaDivisione id="spa" titolo="Nessuna" titoloEm="fretta." intro="Lascia fuori ansia e frenesia: qui ci sono acqua calda, luci soffuse e silenzi che rigenerano." foto="v3-spa-hydromassage.jpg" fotoAlt={spa.fotoAlt} focus="50% 80%">
 
     <section class="spa-sez" data-theme="light" aria-labelledby="percorsoT">
       <div data-reveal>
@@ -34,17 +34,15 @@ const tecnologie = [
     <section class="spa-sez spa-trav" data-theme="light" aria-labelledby="massaggiT">
       <div class="spa-pic" data-reveal><Image src={massaggio} alt="Massaggio alla testa durante un trattamento" widths={[480, 800]} sizes="(min-width: 821px) 40vw, 100vw" /></div>
       <div data-reveal>
-        <p class="eyebrow">Massaggi</p>
         <h2 class="font-display" id="massaggiT">Mani lente, <em>pensieri leggeri.</em></h2>
         <ul class="spa-lista spa-1">{massaggi.map(m => <li>{m}</li>)}</ul>
         <p class="spa-nota">Durate e listino: [DA INSERIRE CON IL CLIENTE]</p>
-        <a class="btn btn-navy" href={wa('Vorrei informazioni sui massaggi')}>Chiedi dei massaggi</a>
+        <a class="btn btn-wa" href={wa('Vorrei informazioni sui massaggi')}>Chiedi dei massaggi</a>
       </div>
     </section>
 
     <section class="spa-sez spa-col" data-theme="light" aria-labelledby="tecnoT">
       <div data-reveal>
-        <p class="eyebrow">Tecnologie</p>
         <h2 class="font-display" id="tecnoT">Estetica avanzata, <em>con calma.</em></h2>
       </div>
       <div class="spa-tecno">
@@ -52,19 +50,18 @@ const tecnologie = [
           <article data-reveal>
             <h3 class="font-display">{t.nome}</h3>
             <p>{t.riga}</p>
-            <a class="btn btn-navy" href={wa(`Vorrei informazioni sul trattamento ${t.nome}`)}>Chiedi di {t.nome}</a>
+            <a class="lnk" href={wa(`Vorrei informazioni sul trattamento ${t.nome}`)}>Chiedi di {t.nome} su WhatsApp <span aria-hidden="true">→</span></a>
           </article>
         ))}
       </div>
     </section>
 
     <section class="spa-sez spa-notte" data-theme="dark" aria-labelledby="pacchettoT">
-      <div data-reveal>
-        <p class="eyebrow">Pacchetto</p>
-        <h2 class="font-display" id="pacchettoT">Percorso SPA + Menu di coppia <em>al Ristorante Don Peppino</em></h2>
-        <p class="spa-nota">Percorso SPA e menu di coppia da Don Peppino, insieme.</p>
+      <div class="spa-pk" data-reveal>
+        <div><h2 class="font-display" id="pacchettoT">Percorso SPA + Menu di coppia <em>al Ristorante Don Peppino</em></h2></div>
+        <div><p class="spa-nota">Percorso SPA e menu di coppia da Don Peppino, insieme.</p>
         <p class="spa-prezzo">Prezzo: [DA INSERIRE CON IL CLIENTE]</p>
-        <a class="btn btn-wa" href={wa('Vorrei informazioni sul pacchetto Percorso SPA + Menu di coppia al Ristorante Don Peppino')}>Chiedi il pacchetto</a>
+        <a class="btn btn-wa" href={wa('Vorrei informazioni sul pacchetto Percorso SPA + Menu di coppia al Ristorante Don Peppino')}>Chiedi il pacchetto</a></div>
       </div>
     </section>
 
@@ -78,13 +75,12 @@ const tecnologie = [
 </script>
 
 <style is:global>
-  .spa-sez { display: grid; gap: 40px; padding: clamp(64px, 11vh, 112px) clamp(16px, 4vw, 48px); color: var(--notte); }
+  .spa-sez { display: grid; gap: 40px; padding: var(--sec-y) var(--gut); color: var(--notte); }
   .spa-trav { background: var(--trav); }
   .spa-notte { background: var(--notte); color: #fff; }
-  .spa-sez h2 { margin: 8px 0 20px; font-size: clamp(32px, 3.6vw, 56px); line-height: 1.05; font-weight: 500; max-width: 18ch; }
-  .spa-sez h2 em { font-style: italic; font-weight: 400; }
+  .spa-sez h2 { max-width: 18ch; }
   .spa-sez .eyebrow { color: var(--navy); }
-  .spa-notte .eyebrow, .spa-notte h2 em { color: var(--azz); }
+  .spa-notte h2 em { color: var(--azz); }
   .spa-prezzo { margin: 0 0 12px; font-size: 18px; font-weight: 700; }
   .spa-nota { margin: 0 0 24px; max-width: 44ch; font-size: 15px; line-height: 1.6; }
   .spa-lista { list-style: none; margin: 0 0 24px; padding: 0; display: grid; gap: 0 32px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); align-content: start; }
@@ -94,10 +90,16 @@ const tecnologie = [
   .spa-pic img { width: 100%; height: 100%; object-fit: cover; }
   .spa-tecno { display: grid; gap: 32px; }
   .spa-tecno article { padding-top: 24px; border-top: 1px solid rgba(6, 54, 109, .35); }
-  .spa-tecno h3 { margin: 0 0 10px; font-size: 28px; font-weight: 500; }
-  .spa-tecno p { margin: 0 0 20px; max-width: 34ch; font-size: 15px; line-height: 1.6; }
+  .spa-tecno h3 { margin: 0 0 10px; font-size: 32px; letter-spacing: .02em; font-weight: 500; }
+  .spa-tecno p { margin: 0 0 12px; max-width: 34ch; font-size: 15px; line-height: 1.6; }
+  /* un solo pulsante pieno per sezione: le tecnologie hanno link testuali */
+  .lnk { display: inline-flex; gap: 8px; align-items: center; min-height: 44px; font-weight: 600; font-size: 14px; color: var(--navy); border-bottom: 1px solid currentColor; }
+  .lnk span { transition: transform .35s cubic-bezier(.2, .7, .2, 1); }
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) { .lnk:hover span { transform: translateX(4px); } }
   @media (min-width: 821px) {
     .spa-sez:not(.spa-col):not(.spa-notte) { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: clamp(32px, 6vw, 96px); }
-    .spa-tecno { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 4vw, 56px); }
+    .spa-tecno { grid-template-columns: minmax(0, 5fr) minmax(0, 4fr) minmax(0, 4fr); gap: clamp(24px, 4vw, 56px); }
+    .spa-pk { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(32px, 6vw, 96px); align-items: end; }
+    .spa-pk h2 { max-width: 16ch; margin-bottom: 0; }
   }
 </style>

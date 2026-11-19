@@ -28,19 +28,18 @@ const faq = [
 ];
 ---
 <Base title="Piscina · Pietrabianca Resort" description="Tre piscine, lettini al sole e un'area food: orari, listino e regolamento del day-use." divisione="piscina">
-  <PaginaDivisione id="piscina" titolo="Tre piscine, un’estate intera." intro="Lettini al sole e un’area food per restare dal mattino a sera." foto="pool-parasol-sunbed.jpg" fotoAlt={piscina.fotoAlt} focus="50% 70%">
+  <PaginaDivisione id="piscina" titolo="Tre piscine," titoloEm="un’estate intera." intro="Lettini al sole e un’area food per restare dal mattino a sera." foto="pool-parasol-sunbed.jpg" fotoAlt={piscina.fotoAlt} focus="50% 70%">
 
     <section class="pi-sez" data-theme="light" aria-labelledby="listinoT">
       <div data-reveal>
-        <p class="eyebrow">Listino</p>
         <h2 class="font-display" id="listinoT">Una giornata, <em>il lettino incluso.</em></h2>
         <p class="pi-nota">Il lettino è incluso. L’ombrellone è su richiesta.</p>
         <p class="pi-nota pi-nota-s">*Prezzi indicativi, da confermare</p>
         <a class="btn btn-wa" href={info}>{piscina.prenota.label}</a>
       </div>
       <dl class="pi-prezzi" data-reveal>
-        <div><dt>Giorni feriali</dt><dd class="font-display">€13*</dd></div>
-        <div><dt>Weekend</dt><dd class="font-display">€18*</dd></div>
+        <div><dt>Giorni feriali</dt><dd class="font-display">€13<span class="ast">*</span></dd></div>
+        <div><dt>Weekend</dt><dd class="font-display">€18<span class="ast">*</span></dd></div>
       </dl>
     </section>
 
@@ -60,7 +59,6 @@ const faq = [
 
     <section class="pi-sez pi-notte" data-theme="dark" aria-labelledby="foodT">
       <div data-reveal>
-        <p class="eyebrow">Area food</p>
         <h2 class="font-display" id="foodT">Si mangia <em>a bordo piscina.</em></h2>
       </div>
       <ul class="pi-food" data-reveal>{food.map(f => <li>{f}</li>)}</ul>
@@ -68,7 +66,6 @@ const faq = [
 
     <section class="pi-sez pi-col" data-theme="light" aria-labelledby="faqT">
       <div data-reveal>
-        <p class="eyebrow">FAQ</p>
         <h2 class="font-display" id="faqT">Prima di <em>partire.</em></h2>
       </div>
       <div class="pi-faq" data-reveal>
@@ -86,19 +83,19 @@ const faq = [
 </script>
 
 <style is:global>
-  .pi-sez { display: grid; gap: 40px; padding: clamp(64px, 11vh, 112px) clamp(16px, 4vw, 48px); color: var(--notte); }
+  .pi-sez { display: grid; gap: 40px; padding: var(--sec-y) var(--gut); color: var(--notte); }
   .pi-trav { background: var(--trav); }
   .pi-notte { background: var(--notte); color: #fff; }
-  .pi-sez h2 { margin: 8px 0 20px; font-size: clamp(32px, 3.6vw, 56px); line-height: 1.05; font-weight: 500; max-width: 18ch; }
-  .pi-sez h2 em { font-style: italic; font-weight: 400; }
+  .pi-sez h2 { max-width: 18ch; }
   .pi-sez .eyebrow { color: var(--navy); }
-  .pi-notte .eyebrow, .pi-notte h2 em { color: var(--azz); }
+  .pi-notte h2 em { color: var(--azz); }
   .pi-nota { margin: 0 0 16px; max-width: 44ch; font-size: 15px; line-height: 1.6; }
   .pi-nota-s { font-size: 13px; margin-bottom: 24px; }
   .pi-prezzi { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-content: center; }
   .pi-prezzi div { padding: 24px 0; border-top: 1px solid rgba(6, 54, 109, .35); }
   .pi-prezzi dt { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; font-weight: 700; color: var(--navy); }
   .pi-prezzi dd { margin: 10px 0 0; font-size: clamp(44px, 6vw, 80px); line-height: 1; font-weight: 500; }
+  .pi-prezzi .ast { font: 600 .32em var(--font-sans); vertical-align: super; margin-left: .1em; }
   .pi-pic { aspect-ratio: 4/5; max-width: 520px; overflow: hidden; border-radius: 6px; }
   .pi-pic img { width: 100%; height: 100%; object-fit: cover; }
   .pi-lista { list-style: none; margin: 0; padding: 0; }
