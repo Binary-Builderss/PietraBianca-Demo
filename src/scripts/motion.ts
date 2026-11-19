@@ -106,7 +106,8 @@ function start(mm: gsap.MatchMedia, reduce: boolean, desktop: boolean) {
   };
   const byHash = () => location.hash.length > 1 ? document.getElementById(location.hash.slice(1)) : null;
   addEventListener('hashchange', () => goTo(byHash(), true));
-  track?.addEventListener('focusin', e => goTo(e.target as Element, true));
+  // solo tastiera: il focus col mouse (Chrome mette il focus al mousedown) farebbe scorrere il pin sotto il click e lo perderebbe
+  track?.addEventListener('focusin', e => { const t = e.target as Element; if (t.matches(':focus-visible')) goTo(t, true); });
   if (byHash()) goTo(byHash(), false);
 }
 
