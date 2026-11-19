@@ -43,3 +43,22 @@ test('/eventi: form valida, non fa richieste, mostra conferma demo', async ({ pa
   await expect(page.getByRole('status')).toContainText('non viene inviato nulla');
   expect(posts).toEqual([]);
 });
+test.describe('/eventi senza JS', () => {
+  test.use({ javaScriptEnabled: false });
+  test('il submit non naviga e non mette i dati nell\'URL', async ({ page }) => {
+    await page.goto('/eventi');
+    const navs: string[] = []; page.on('framenavigated', f => f === page.mainFrame() && navs.push(f.url()));
+    const f = page.locator('form#preventivo');
+    await f.getByLabel(/tipo evento/i).selectOption('Diciottesimo');
+    await f.getByLabel(/data/i).fill('2027-03-14');
+    await f.getByLabel(/invitati/i).fill('80');
+    await f.getByLabel(/nome/i).fill('Prova');
+    await f.getByLabel(/telefono/i).fill('3330000000');
+    await f.getByLabel(/email/i).fill('prova@example.com');
+    await f.getByLabel(/privacy/i).check();
+    await f.getByRole('button', { name: /invia/i }).click();
+    await page.waitForTimeout(500);
+    expect(page.url()).not.toContain('?');
+    expect(navs).toEqual([]);
+  });
+});
